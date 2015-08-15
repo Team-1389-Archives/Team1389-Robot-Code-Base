@@ -1,0 +1,5 @@
+#This file tells git which files and directories to ignore.
+#The following folders contain builds that dont need to be stored online
+bin
+build
+dist

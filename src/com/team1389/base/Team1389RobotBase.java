@@ -3,6 +3,8 @@ package com.team1389.base;
 
 import java.util.AbstractList;
 
+import com.team1389.base.webserver.WebServer;
+
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -22,6 +24,8 @@ public abstract class Team1389RobotBase extends IterativeRobot {
 		TEST,
 		DISABLED
 	}
+	
+	private WebServer server;
 	
 	private AutonomousBase autonBase;
 	private TeleopBase teleBase;
@@ -45,6 +49,11 @@ public abstract class Team1389RobotBase extends IterativeRobot {
     	selectAuton(0);
     	//TODO is next line necessary?
     	mode = Mode.DISABLED;
+    	
+    	//start webserver
+    	server = new WebServer();
+    	server.start();
+    	
     }
     
 	private void selectAuton(int id){

@@ -3,6 +3,8 @@ package com.team1389.base;
 
 import java.util.AbstractList;
 
+import org.eclipse.jetty.server.Server;
+
 import com.team1389.base.webserver.WebServer;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
@@ -42,6 +44,10 @@ public abstract class Team1389RobotBase extends IterativeRobot {
    	public abstract void setup();
 
     public void robotInit() {
+    	//will it crash here?
+    	Server a = new Server();
+    	
+    	
     	setup();
     	autonBase = getAutonomousBase();
     	teleBase = getTeleopBase();

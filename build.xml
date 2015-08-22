@@ -35,7 +35,7 @@
     <mkdir dir="${build.jars}" />
 
     <echo>[athena-jar] Copying jars from ${classpath} to ${build.jars}.</echo>
-    <copy todir="${build.jars}" flatten="true">
+    <copy todir="${build.jars}" flatten="true" verbose="true">
       <path>
       <pathelement path="${classpath}"/>
       </path>
@@ -54,6 +54,34 @@
       <include name="**/*.jar" />
     </zipgroupfileset>
     </jar>
+  </target>
+	
+	
+  <target name="jar-for-simulation" depends="compile">
+	<echo>[jar-for-simulation] Building jar using custom team1389 stuff.</echo>
+
+	<jar destfile="${simulation.dist.jar}">
+	  <manifest>
+		<attribute name="Built-By" value="${user.name}"/>
+		<attribute name="Robot-Class" value="${robot.class}"/>
+		<attribute name="Main-Class" value="edu.wpi.first.wpilibj.RobotBase"/>
+	  </manifest>
+	  <fileset dir="${build.dir}" />
+	  <zipgroupfileset dir="${wpilib.sim.lib}">
+	  	<include name="**/*.jar" />
+	  </zipgroupfileset>
+		
+		
+	  <!-- The following two things have been added by team1389 from the default jar-for-simulation target.
+	  the zipgroupfileset contains all jars in the lib folder so that the program can access jetty and stuff.
+	  The fileset allows the running program to access the files in the Resources folder-->
+	  <zipgroupfileset dir="${lib.dir}">
+	  	<include name="**/*.jar"/>
+	  </zipgroupfileset>
+      <fileset dir="${resources.dir}"/>
+		
+		
+	</jar>
   </target>
   
 </project> 

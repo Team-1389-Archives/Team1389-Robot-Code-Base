@@ -23,6 +23,9 @@ public class WebServer {
 				ServletHolder index = new ServletHolder("index", new IndexServlet());
 				handler.addServlet(index, "");
 				
+				ServletHolder yolo = new ServletHolder("yolo", new HTMLServlet("web/test.html"));
+				handler.addServlet(yolo, "/yolo");
+				
 				try {
 					server.start();
 					server.join();

@@ -107,7 +107,7 @@ public abstract class Team1389RobotBase extends IterativeRobot {
     	//TODO cancel whatever command was running
 	}
 
-	/*Each of there function is called periodically in their respective modes.
+	/*Each of these functions is called periodically in their respective modes.
      * The scheduler needs to be run so that Commands which are scheduled will run.*/
     public void teleopPeriodic() {
         Scheduler.getInstance().run();

@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<!-- Note to people wondering what this file is:
+When you make a WPILIB project in eclipse, it automatically generates this file. It defines how the robot program is compiled and sent to the roborio.
+It is written for a build tool called Ant.
+In order for us at team1389 to add third party libraries, this file had to be modified from the default. The comments below explain how that works.-->
+
 <project name="FRC Deployment" default="deploy">
 
   <!--
@@ -20,15 +25,31 @@
   <!-- <property name="target" value=""/> -->
 
   <!-- Any other property in build.properties can also be overridden. -->
+
+  <pathconvert pathsep=":"
+      property="libs">
+      <path>
+          <fileset dir="lib">
+              <include name="*"/>
+          </fileset>
+      </path>
+  </pathconvert>
   
-  <property file="${user.home}/wpilib/wpilib.properties"/>
   <property file="build.properties"/>
+  <property file="${user.home}/wpilib/wpilib.properties"/>
   <property file="${user.home}/wpilib/java/${version}/ant/build.properties"/>
+	
+  <echo>libs: ${libs}</echo>
+  
+  <!-- <property name="classpath" value="${wpilibjars}:${libs}"/> -->
   
   <import file="${wpilib.ant.dir}/build.xml"/>
-
-  <!-- The following code was added to this file, and was initially copied from https://github.com/Team254/FRC-2015 -->
 	
+  <!-- The following stuff has been added by team1389 -->
+
+  <!-- This overrides the default jar target in the wpilib build.xml.
+  It adds the Resources folder and libraries in the lib directory when the code is being deployed to a roborio.
+  A few things have been changed from the default jar target -->
   <target name="jar" depends="compile">
     <echo>[athena-jar] Making jar ${dist.jar}.</echo>
     <mkdir dir="${dist.dir}" />
@@ -49,10 +70,16 @@
       </manifest>
 
       <fileset dir="${build.dir}" includes="**/*.class"/>
+      <zipgroupfileset dir="${build.jars}">
+        <include name="**/*.jar" />
+      </zipgroupfileset>
+    	
+      <!-- The following two things have been added by team1389. They add the libraries and Resources folder into the final jar.-->
+    	
+	  <zipgroupfileset dir="${lib.dir}">
+	  	<include name="**/*.jar"/>
+	  </zipgroupfileset>
       <fileset dir="${resources.dir}"/>
-    <zipgroupfileset dir="${build.jars}">
-      <include name="**/*.jar" />
-    </zipgroupfileset>
     </jar>
   </target>
 	

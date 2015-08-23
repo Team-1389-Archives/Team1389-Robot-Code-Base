@@ -2,6 +2,7 @@
 package com.team1389.base;
 
 import java.util.AbstractList;
+import java.util.List;
 
 import org.eclipse.jetty.server.Server;
 
@@ -32,15 +33,20 @@ public abstract class Team1389RobotBase extends IterativeRobot {
 	private Mode mode;
 	
 	//auton
-	private AbstractList<AutonMode> autonModes;
+	private List<AutonMode> autonModes;
    	private AutonMode selected;
    	private Command autonCommand;
    	
    	public abstract TeleopBase getTeleopBase();
    	public abstract AutonomousBase getAutonomousBase();
    	public abstract void setup();
+   	
+   	public List<AutonMode> getAutonModes(){
+   		return autonBase.getAutonModes();
+   	}
 
     public void robotInit() {
+    	Global.robot = this;
     	//will it crash here?
     	Server a = new Server();
     	

@@ -1,10 +1,15 @@
 package com.team1389.robot;
 
 import com.team1389.base.AutonomousBase;
-import com.team1389.base.Team1389RobotBase;
+import com.team1389.base.RobotCode;
+import com.team1389.base.Simulator;
 import com.team1389.base.TeleopBase;
 
-public class Robot extends Team1389RobotBase{
+/**
+ * This class defines where the teleop and auton bases are.
+ * The code in this file wony usually have to be changed.
+ */
+public class Robot implements RobotCode{
 
 	@Override
 	public TeleopBase getTeleopBase() {
@@ -19,7 +24,12 @@ public class Robot extends Team1389RobotBase{
 	@Override
 	public void setup() {
 		Inputs.setup();
-		System.out.println("this is running");
+		Subsystems.setup();
+		System.out.println("Robot is initialized");
 	}
 
+	//for running a lightweight simulation
+	public static void main(String[] args){
+		Simulator.simulate(new Robot());
+	}
 }

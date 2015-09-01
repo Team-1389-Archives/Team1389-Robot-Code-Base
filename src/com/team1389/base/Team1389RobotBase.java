@@ -1,7 +1,6 @@
 
 package com.team1389.base;
 
-import java.util.AbstractList;
 import java.util.List;
 
 import org.eclipse.jetty.server.Server;
@@ -18,12 +17,19 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
  */
 
 public abstract class Team1389RobotBase extends IterativeRobot {
+	
+//	public static void main(String[] args){
+//		Command c = new CommandGroup();
+//		System.out.println("didnt crash");
+//	}
+	
 	enum Mode{
 		AUTON,
 		TELEOP,
 		TEST,
 		DISABLED
 	}
+	private RobotCode projectSpecificCode;
 	
 	private WebServer server;
 	
@@ -37,9 +43,7 @@ public abstract class Team1389RobotBase extends IterativeRobot {
    	private AutonMode selected;
    	private Command autonCommand;
    	
-   	public abstract TeleopBase getTeleopBase();
-   	public abstract AutonomousBase getAutonomousBase();
-   	public abstract void setup();
+   	public abstract RobotCode getCode();
    	
    	public List<AutonMode> getAutonModes(){
    		return autonBase.getAutonModes();
@@ -47,13 +51,16 @@ public abstract class Team1389RobotBase extends IterativeRobot {
 
     public void robotInit() {
     	Global.robot = this;
+    	
+    	projectSpecificCode = getCode();
+    	
     	//will it crash here?
     	Server a = new Server();
     	
     	
-    	setup();
-    	autonBase = getAutonomousBase();
-    	teleBase = getTeleopBase();
+    	projectSpecificCode.setup();
+    	autonBase = projectSpecificCode.getAutonomousBase();
+    	teleBase = projectSpecificCode.getTeleopBase();
     	teleBase.setupCommands();
     	selectAuton(0);
     	//TODO is next line necessary?

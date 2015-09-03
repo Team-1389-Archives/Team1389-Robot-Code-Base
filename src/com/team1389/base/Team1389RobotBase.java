@@ -45,12 +45,8 @@ public abstract class Team1389RobotBase extends IterativeRobot {
    	
    	public abstract RobotCode getCode();
    	
-   	public List<AutonMode> getAutonModes(){
-   		return autonBase.getAutonModes();
-   	}
-
     public void robotInit() {
-    	Global.robot = this;
+    	Global.robot = projectSpecificCode;
     	
     	projectSpecificCode = getCode();
     	

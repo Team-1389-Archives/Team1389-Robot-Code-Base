@@ -10,7 +10,8 @@
  * If the code is running on a roborio, make sure that your computer is connected to the router and put the following url in your browser:
  * 10.13.89.2:5800
  * 
- * If the code is running in a simulator, use this url:
+ * If the code is running in a simulator, try both if the following URLs:
  * 0.0.0.0:5800
+ * localhost:5800
  */
 package com.team1389.base.webserver;

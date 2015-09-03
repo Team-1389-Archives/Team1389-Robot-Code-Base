@@ -7,6 +7,9 @@ public class Simulator {
 	 * simple simulator for the purpose of testing the webserver
 	 */
 	public static void simulate(RobotCode robotCode){
+		//setup globals
+		Global.robot = robotCode;
+		
 		WebServer server = new WebServer();
 		server.start();
 	}

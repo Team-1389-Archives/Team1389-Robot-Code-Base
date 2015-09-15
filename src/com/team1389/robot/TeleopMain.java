@@ -12,5 +12,7 @@ public class TeleopMain extends TeleopBase{
 	public void setupCommands(){
 		//add code here to setup what happens when you press joystick buttons. For example:
 		//Inputs.aButton.whenPressed(new ExtendArmCommand());
+		
+		
 	}
 }

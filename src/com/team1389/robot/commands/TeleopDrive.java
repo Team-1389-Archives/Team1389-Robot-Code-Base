@@ -23,6 +23,11 @@ public class TeleopDrive extends Command{
 		double leftSpeed = lefty + leftx;
 		double rightSpeed = lefty - leftx;
 		
+		if (Inputs.driveStick.getRawButton(2)){
+			leftSpeed *= .5;
+			rightSpeed *= .5;
+		}
+		
 		Subsystems.driveTrain.set(leftSpeed, rightSpeed);
 	}
 

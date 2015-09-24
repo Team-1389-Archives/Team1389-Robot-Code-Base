@@ -20,7 +20,11 @@ public class TeleopElevator extends Command{
 
 	@Override
 	protected void execute() {
-		Subsystems.elevator.set(Inputs.manipStick.getLeftY());
+		double joyValue = Inputs.manipStick.getLeftY();
+		if (Inputs.manipStick.getRawButton(2)){
+			joyValue *= .5;
+		}
+		Subsystems.elevator.set(joyValue);
 	}
 
 	@Override

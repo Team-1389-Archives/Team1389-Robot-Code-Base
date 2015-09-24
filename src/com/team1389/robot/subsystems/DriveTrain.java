@@ -5,17 +5,17 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 
 public class DriveTrain extends Subsystem{
 	
-	Victor leftFront;
-	Victor leftBack;
+	Victor leftDrive;
+	Victor rightDrive;
 	
-	Victor rightFront;
-	Victor rightBack;
+	public DriveTrain(){
+		leftDrive = new Victor(0);
+		rightDrive = new Victor(1);
+	}
 	
-	DriveTrain(){
-//		leftFront = new Victor();
-//		leftBack = new Victor();
-//		rightFront = new Victor();
-//		rightBack = new Victor();
+	public void set(double left, double right){
+		leftDrive.set(left);
+		rightDrive.set(right);
 	}
 
 	@Override

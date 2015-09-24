@@ -46,7 +46,8 @@ public abstract class Team1389RobotBase extends IterativeRobot {
    	public abstract RobotCode getCode();
    	
     public void robotInit() {
-    	Global.robot = projectSpecificCode;
+    	Global.robotCode = projectSpecificCode;
+    	Global.robotBase = this;
     	
     	projectSpecificCode = getCode();
     	
@@ -91,6 +92,7 @@ public abstract class Team1389RobotBase extends IterativeRobot {
     @Override
     public void teleopInit() {
     	mode = Mode.TELEOP;
+    	projectSpecificCode.getTeleopBase().start();
     }
     @Override
     public void testInit(){

@@ -26,8 +26,8 @@ public class AutonModesServlet extends JSONGetServlet<AutonModesServlet.AutonMod
 	AutonModesList onGet() {
 		ArrayList<AutonInfo> autons = new ArrayList<AutonInfo>();
 
-		List<AutonMode> modes = Global.robot.getAutonomousBase().getAutonModes();
-		AutonMode selectedAuton = Global.robot.getAutonomousBase().getSelectedAuton();
+		List<AutonMode> modes = Global.robotCode.getAutonomousBase().getAutonModes();
+		AutonMode selectedAuton = Global.robotCode.getAutonomousBase().getSelectedAuton();
 
 		for (AutonMode mode: modes){
 			AutonInfo info = new AutonInfo(mode.getName());

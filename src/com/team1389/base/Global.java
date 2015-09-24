@@ -1,5 +1,6 @@
 package com.team1389.base;
 
 public class Global {
-	public static RobotCode robot;
+	public static RobotCode robotCode;
+	public static Team1389RobotBase robotBase;
 }

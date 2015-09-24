@@ -25,6 +25,7 @@ public class Robot implements RobotCode{
 	public void setup() {
 		Inputs.setup();
 		Subsystems.setup();
+		Globals.setup();
 		System.out.println("Robot is initialized");
 	}
 

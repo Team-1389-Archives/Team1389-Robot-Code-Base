@@ -1,6 +1,6 @@
 package com.team1389.robot.commands;
 
-import com.team1389.base.Global;
+import com.team1389.base.BaseGlobals;
 import com.team1389.robot.Inputs;
 import com.team1389.robot.Subsystems;
 
@@ -17,8 +17,8 @@ public class TeleopDrive extends Command{
 
 	@Override
 	protected void execute() {
-		double leftx = Inputs.driveStick.getRawAxis(0);
-		double lefty = Inputs.driveStick.getRawAxis(1);
+		double leftx = Inputs.driveStick.getLeftX();
+		double lefty = Inputs.driveStick.getLeftY();
 		
 		double leftSpeed = lefty + leftx;
 		double rightSpeed = lefty - leftx;
@@ -28,7 +28,7 @@ public class TeleopDrive extends Command{
 
 	@Override
 	protected boolean isFinished() {
-		return !Global.robotBase.isOperatorControl();
+		return !BaseGlobals.robotBase.isOperatorControl();
 	}
 
 	@Override

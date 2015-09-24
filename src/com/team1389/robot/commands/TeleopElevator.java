@@ -1,6 +1,6 @@
 package com.team1389.robot.commands;
 
-import com.team1389.base.Global;
+import com.team1389.base.BaseGlobals;
 import com.team1389.robot.Inputs;
 import com.team1389.robot.Subsystems;
 
@@ -20,12 +20,12 @@ public class TeleopElevator extends Command{
 
 	@Override
 	protected void execute() {
-		Subsystems.elevator.set(Inputs.driveStick.getRawAxis(5));
+		Subsystems.elevator.set(Inputs.manipStick.getLeftY());
 	}
 
 	@Override
 	protected boolean isFinished() {
-		return !Global.robotBase.isOperatorControl();
+		return !BaseGlobals.robotBase.isOperatorControl();
 	}
 
 	@Override

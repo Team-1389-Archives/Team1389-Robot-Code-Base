@@ -45,12 +45,11 @@ public abstract class Team1389RobotBase extends IterativeRobot {
    	
    	public abstract RobotCode getCode();
    	
-    public void robotInit() {
-    	Global.robotCode = projectSpecificCode;
-    	Global.robotBase = this;
-    	
+    public void robotInit() {    	
     	projectSpecificCode = getCode();
-    	
+    	BaseGlobals.robotCode = projectSpecificCode;
+    	BaseGlobals.robotBase = this;
+
     	//will it crash here?
     	Server a = new Server();
     	

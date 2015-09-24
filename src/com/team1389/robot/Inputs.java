@@ -1,5 +1,7 @@
 package com.team1389.robot;
 
+import com.team1389.base.util.XboxJoystick;
+
 import edu.wpi.first.wpilibj.Joystick;
 
 public class Inputs {
@@ -7,13 +9,15 @@ public class Inputs {
 	//public static DigitalInput limit1;
 	//public static Joystick stick;
 	
-	public static Joystick driveStick;
+	public static XboxJoystick driveStick;
+	public static XboxJoystick manipStick;
 	
 	public static void setup(){
 		//initialize variables here. For example:
 		//limit1 = new DigitalInput(RobotMap.limit1);
 		//stick = new DigitalInput(RobotMap.operator);
 		
-		driveStick = new Joystick(0);
+		driveStick = new XboxJoystick(0);
+		manipStick = new XboxJoystick(1);
 	}
 }

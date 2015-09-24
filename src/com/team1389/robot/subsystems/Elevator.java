@@ -1,23 +1,28 @@
 package com.team1389.robot.subsystems;
 
+import com.team1389.robot.Globals;
+
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.Victor;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 public class Elevator extends Subsystem{
 	
-	SpeedController rightMotor;
-	SpeedController leftMotor;
+	SpeedController motor;
 
 	@Override
 	protected void initDefaultCommand() {
-		rightMotor = new Victor(2);
-		leftMotor = new Victor(3);
+		motor = new Victor(2);
 	}
 	
 	public void set(double power){
-		rightMotor.set(-power);
-		leftMotor.set(power);
+		double newPower;
+		if(power > 0){
+			newPower = power * Globals.liftSpeed.get() * .6;//down
+		} else {
+			newPower = power * Globals.liftSpeed.get();
+		}
+		motor.set(-newPower);
 	}
 
 }

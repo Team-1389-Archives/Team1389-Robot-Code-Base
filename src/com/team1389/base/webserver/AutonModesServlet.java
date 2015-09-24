@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.team1389.base.AutonMode;
-import com.team1389.base.Global;
+import com.team1389.base.BaseGlobals;
 
 public class AutonModesServlet extends JSONGetServlet<AutonModesServlet.AutonModesList>{
 	static class AutonInfo{
@@ -26,8 +26,8 @@ public class AutonModesServlet extends JSONGetServlet<AutonModesServlet.AutonMod
 	AutonModesList onGet() {
 		ArrayList<AutonInfo> autons = new ArrayList<AutonInfo>();
 
-		List<AutonMode> modes = Global.robotCode.getAutonomousBase().getAutonModes();
-		AutonMode selectedAuton = Global.robotCode.getAutonomousBase().getSelectedAuton();
+		List<AutonMode> modes = BaseGlobals.robotCode.getAutonomousBase().getAutonModes();
+		AutonMode selectedAuton = BaseGlobals.robotCode.getAutonomousBase().getSelectedAuton();
 
 		for (AutonMode mode: modes){
 			AutonInfo info = new AutonInfo(mode.getName());

@@ -8,7 +8,7 @@
  * 
  * How To Connect To It:
  * If the code is running on a roborio, make sure that your computer is connected to the router and put the following url in your browser:
- * 10.13.89.2:5800
+ * http://roborio-1389.local:5800/
  * 
  * If the code is running in a simulator, try both if the following URLs:
  * 0.0.0.0:5800

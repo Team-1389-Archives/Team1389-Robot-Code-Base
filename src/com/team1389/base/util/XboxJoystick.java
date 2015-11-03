@@ -2,6 +2,11 @@ package com.team1389.base.util;
 
 import edu.wpi.first.wpilibj.Joystick;
 
+/**
+ * This class represents an xbox joystick. It adds some functionality to the default
+ * wpilib Joystick class to make using Xbox joysticks easier.
+ *
+ */
 public class XboxJoystick extends Joystick{
 
 	public XboxJoystick(int port) {

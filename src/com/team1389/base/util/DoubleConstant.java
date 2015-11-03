@@ -1,6 +1,9 @@
 package com.team1389.base.util;
 
-public class DoubleConstant extends Constant<Double>{
+/**
+ * This class creates a constant of type Double that can be set by the user
+ */
+public class DoubleConstant extends ConfigurableConstant<Double>{
 
 	private static class DoubleSerializer implements StringSerializer<Double>{
 

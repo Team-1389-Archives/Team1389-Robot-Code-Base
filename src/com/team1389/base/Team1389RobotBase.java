@@ -1,14 +1,11 @@
 
 package com.team1389.base;
 
-import java.util.List;
-
 import org.eclipse.jetty.server.Server;
 
 import com.team1389.base.webserver.WebServer;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
-import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 
@@ -18,48 +15,27 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 
 public abstract class Team1389RobotBase extends IterativeRobot {
 	
-//	public static void main(String[] args){
-//		Command c = new CommandGroup();
-//		System.out.println("didnt crash");
-//	}
-	
 	enum Mode{
 		AUTON,
 		TELEOP,
 		TEST,
 		DISABLED
 	}
-	private RobotCode projectSpecificCode;
 	
 	private WebServer server;
 	
-	private AutonomousBase autonBase;
-	private TeleopBase teleBase;
-
 	private Mode mode;
 	
-	//auton
-	private List<AutonMode> autonModes;
-   	private AutonMode selected;
-   	private Command autonCommand;
-   	
    	public abstract RobotCode getCode();
    	
     public void robotInit() {    	
-    	projectSpecificCode = getCode();
-    	BaseGlobals.robotCode = projectSpecificCode;
+    	BaseGlobals.robotCode = getCode();
     	BaseGlobals.robotBase = this;
 
-    	//will it crash here?
+    	BaseGlobals.robotCode.getTeleopBase().setupCommands();
+
     	Server a = new Server();
     	
-    	
-    	projectSpecificCode.setup();
-    	autonBase = projectSpecificCode.getAutonomousBase();
-    	teleBase = projectSpecificCode.getTeleopBase();
-    	teleBase.setupCommands();
-    	selectAuton(0);
-    	//TODO is next line necessary?
     	mode = Mode.DISABLED;
     	
     	//start webserver
@@ -68,30 +44,20 @@ public abstract class Team1389RobotBase extends IterativeRobot {
     	
     }
     
-	private void selectAuton(int id){
-    	autonModes = autonBase.getAutonModes();
-    	if(id < autonModes.size()){//for now, need to make a way that it is displayed as not having an auton mode
-    		selected = autonModes.get(id);
-    		autonCommand = selected.getCommand();
-    	}
-    }
-	
     @Override
     public void autonomousInit() {
     	mode = Mode.AUTON;
-    	autonCommand.start();
+    	BaseGlobals.robotCode.getAutonomousBase().autonStart();
     }
     private void disabledAuton() {
-    	if (selected.shouldCancelCommandsOnAutonEnd()){
-    		autonCommand.cancel();
-    	}
+    	BaseGlobals.robotCode.getAutonomousBase().autonEnd();
 	}
 
 
     @Override
     public void teleopInit() {
     	mode = Mode.TELEOP;
-    	projectSpecificCode.getTeleopBase().start();
+    	BaseGlobals.robotCode.getTeleopBase().start();
     }
     @Override
     public void testInit(){

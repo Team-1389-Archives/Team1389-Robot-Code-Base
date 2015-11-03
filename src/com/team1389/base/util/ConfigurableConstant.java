@@ -2,13 +2,18 @@ package com.team1389.base.util;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-public class Constant<T>{
+/**
+ * This class creates a constant of type T that the user can configure on the SmartDashboard
+ * as well as a page in the webserver.
+ */
+//TODO find a way to make these constants stay saved in a file on the RoboRio and/or Driver station
+public class ConfigurableConstant<T>{
 	public static String randomString = "SDKFJASLDFJASDIFSDKFJjfakdshfaksdfjaoijsfdksj";
 	
 	public String name;
 	public StringSerializer<T> serializer;
 	
-	public Constant(String name, T defaultVal, StringSerializer<T> serializer){
+	public ConfigurableConstant(String name, T defaultVal, StringSerializer<T> serializer){
 		this.name = name;
 		this.serializer = serializer;
 		if (!isSet()){

@@ -1,9 +1,9 @@
 package com.team1389.robot;
 
-import com.team1389.base.AutonomousBase;
 import com.team1389.base.RobotCode;
 import com.team1389.base.Simulator;
 import com.team1389.base.TeleopBase;
+import com.team1389.base.auton.AutonomousBase;
 
 /**
  * This class defines where the teleop and auton bases are.
@@ -11,12 +11,10 @@ import com.team1389.base.TeleopBase;
  */
 public class Robot implements RobotCode{
 
-	@Override
 	public TeleopBase getTeleopBase() {
 		return new TeleopMain();
 	}
 
-	@Override
 	public AutonomousBase getAutonomousBase() {
 		return new AutonomousMain();
 	}

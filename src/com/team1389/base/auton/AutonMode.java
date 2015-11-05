@@ -1,4 +1,4 @@
-package com.team1389.base;
+package com.team1389.base.auton;
 
 import edu.wpi.first.wpilibj.command.Command;
 

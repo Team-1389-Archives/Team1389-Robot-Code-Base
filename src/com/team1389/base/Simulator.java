@@ -8,7 +8,7 @@ public class Simulator {
 	 */
 	public static void simulate(RobotCode robotCode){
 		//setup globals
-		BaseGlobals.robotCode = robotCode;
+		BaseGlobals.robotCode = new RobotCodeHolder(robotCode);
 		
 		WebServer server = new WebServer();
 		server.start();

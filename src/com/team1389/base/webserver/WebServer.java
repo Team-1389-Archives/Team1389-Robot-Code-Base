@@ -37,6 +37,7 @@ public class WebServer {
 		server.setHandler(handlerCollection);
 		
 		addServlet("/autonModes", new AutonModesServlet());
+		addServlet("/setAuton", new AutonModeSetServlet());
 		addServlet("/getConstants", new ConstantGetServlet());
 		addServlet("/setConstant", new ConstantSetServlet());
 	}

@@ -1,10 +1,10 @@
 package com.team1389.robot;
 
-import java.util.AbstractList;
 import java.util.ArrayList;
+import java.util.List;
 
-import com.team1389.base.AutonMode;
-import com.team1389.base.AutonomousBase;
+import com.team1389.base.auton.AutonMode;
+import com.team1389.base.auton.AutonomousBase;
 
 import edu.wpi.first.wpilibj.command.Command;
 
@@ -14,7 +14,7 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class AutonomousMain extends AutonomousBase{
 	@Override
-	public AbstractList<AutonMode> getAutonModes(){
+	public List<AutonMode> provideAutonModes(){
 		ArrayList<AutonMode> modes = new ArrayList<AutonMode>();
 		//add modes to list here
 		

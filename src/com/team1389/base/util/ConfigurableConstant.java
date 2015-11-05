@@ -11,6 +11,7 @@ public class ConfigurableConstant<T>{
 	public static String randomString = "SDKFJASLDFJASDIFSDKFJjfakdshfaksdfjaoijsfdksj";
 	
 	public String name;
+	public String oldValue;
 	public StringSerializer<T> serializer;
 	
 	public ConfigurableConstant(String name, T defaultVal, StringSerializer<T> serializer){
@@ -29,8 +30,8 @@ public class ConfigurableConstant<T>{
 	public T get(){
 		String dashboardValue = SmartDashboard.getString(name);
 		String webValue = WebConstantManager.getInstance().getConstant(name);
-		if (webValue != null){
-			if (dashboardValue != null){
+		if (!webValue.equals(oldValue)){
+			if (!dashboardValue.equals(oldValue)){
 				System.out.println("warning: constant " + name + " set from both smartdashboard and"
 						+ "web dashboard, using value from webdashboard.");
 			}
@@ -43,5 +44,6 @@ public class ConfigurableConstant<T>{
 		String asString = serializer.toString(value);
 		SmartDashboard.putString(name, asString);
 		WebConstantManager.getInstance().setConstant(name, asString);
+		oldValue = asString;
 	}
 }

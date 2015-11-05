@@ -9,9 +9,21 @@ function httpGetAsync(theUrl, callback)
     xmlHttp.send(null);
 }
 
+function httpPostAsync(theUrl, data, callback)
+{
+    var xmlHttp = new XMLHttpRequest();
+    xmlHttp.onreadystatechange = function() { 
+        if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
+            callback(xmlHttp.responseText);
+    }
+    xmlHttp.open("POST", theUrl, true); // true for asynchronous 
+    xmlHttp.send(data);
+}
+
 var nameElementMap = {};
 
 function drawSelected(autonName){
+	console.log("setting " + autonName + " as selected");
 	var buttons = document.querySelectorAll(".autonButton");
 	[].forEach.call(buttons, function(button){
 		button.style.backgroundColor="";
@@ -23,6 +35,13 @@ function makeAutonElement(modeData){
 	var button = document.createElement("button");
 	button.innerText = modeData.autonName;
 	button.className += "autonButton";
+	button.onclick = function(){
+		console.log("sending " + JSON.stringify({name: modeData.autonName}));
+		httpPostAsync("/servlet/setAuton", JSON.stringify({name: modeData.autonName}), function(response){
+			console.log("sent it, yo, recieved " + response);
+			drawSelected(modeData.autonName);
+		});
+	}
 	return button;
 }
 
@@ -40,5 +59,7 @@ httpGetAsync("/servlet/autonModes", function(data){
 		listDiv.appendChild(element);
 		nameElementMap[element.innerText] = element;
 	});
+	
+	drawSelected(autonModesData.selectedAuton);
 });
 }

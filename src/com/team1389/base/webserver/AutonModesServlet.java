@@ -3,8 +3,8 @@ package com.team1389.base.webserver;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.team1389.base.AutonMode;
 import com.team1389.base.BaseGlobals;
+import com.team1389.base.auton.AutonMode;
 
 public class AutonModesServlet extends JSONGetServlet<AutonModesServlet.AutonModesList>{
 	static class AutonInfo{
@@ -27,7 +27,7 @@ public class AutonModesServlet extends JSONGetServlet<AutonModesServlet.AutonMod
 		ArrayList<AutonInfo> autons = new ArrayList<AutonInfo>();
 
 		List<AutonMode> modes = BaseGlobals.robotCode.getAutonomousBase().getAutonModes();
-		AutonMode selectedAuton = BaseGlobals.robotCode.getAutonomousBase().getSelectedAuton();
+		String selectedAuton = BaseGlobals.robotCode.getAutonomousBase().getSelectedAuton();
 
 		for (AutonMode mode: modes){
 			AutonInfo info = new AutonInfo(mode.getName());
@@ -36,7 +36,7 @@ public class AutonModesServlet extends JSONGetServlet<AutonModesServlet.AutonMod
 		
 		System.out.println("there are " + modes.size() + " modes");
 		
-		AutonModesList modesList = new AutonModesList(autons, selectedAuton.getName());
+		AutonModesList modesList = new AutonModesList(autons, selectedAuton);
 
 		return modesList;
 	}

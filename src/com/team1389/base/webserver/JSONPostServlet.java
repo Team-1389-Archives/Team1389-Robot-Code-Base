@@ -20,7 +20,7 @@ public abstract class JSONPostServlet<FromClient, ToClient> extends HttpServlet{
         
         java.lang.reflect.Type type = new TypeToken<FromClient>(){}.getType();
 //        FromClient reqObj = gson.fromJson(req.getReader(), type);
-        FromClient reqObj = gson.fromJson(req.getReader(), getFromClientClass());
+        FromClient reqObj = gson.fromJson(req.getReader(), whatClassIsFromClient());
         
         ToClient respObj = onPost(reqObj);
         
@@ -28,5 +28,5 @@ public abstract class JSONPostServlet<FromClient, ToClient> extends HttpServlet{
 	}
 	
 	abstract ToClient onPost(FromClient fromClient);
-	abstract Class<FromClient> getFromClientClass();
+	abstract Class<FromClient> whatClassIsFromClient();
 }

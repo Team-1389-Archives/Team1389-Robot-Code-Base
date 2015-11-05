@@ -22,17 +22,26 @@ public class ConfigurableConstant<T>{
 	}
 	public boolean isSet(){
 		String currentValue = SmartDashboard.getString(name, randomString);
-		if (currentValue.equals(randomString)){
-			return false;
-		} else {
-			return true;
-		}
+		boolean onSmartDashboard = !currentValue.equals(randomString);
+		boolean onWebConstants = WebConstantManager.getInstance().getConstant(name) != null;
+		return onSmartDashboard || onWebConstants;
 	}
 	public T get(){
-		String value = SmartDashboard.getString(name);
-		return serializer.toT(value);
+		String dashboardValue = SmartDashboard.getString(name);
+		String webValue = WebConstantManager.getInstance().getConstant(name);
+		if (webValue != null){
+			if (dashboardValue != null){
+				System.out.println("warning: constant " + name + " set from both smartdashboard and"
+						+ "web dashboard, using value from webdashboard.");
+			}
+			return serializer.toT(webValue);
+		} else {
+			return serializer.toT(dashboardValue);
+		}
 	}
 	public void set(T value){
-		SmartDashboard.putString(name, serializer.toString(value));
+		String asString = serializer.toString(value);
+		SmartDashboard.putString(name, asString);
+		WebConstantManager.getInstance().setConstant(name, asString);
 	}
 }

@@ -26,6 +26,7 @@ function makeAutonElement(modeData){
 	return button;
 }
 
+window.onload = function(){
 httpGetAsync("/servlet/autonModes", function(data){
 	var autonModesData = JSON.parse(data);
 	var autonListData = autonModesData.autonModes;
@@ -40,3 +41,4 @@ httpGetAsync("/servlet/autonModes", function(data){
 		nameElementMap[element.innerText] = element;
 	});
 });
+}

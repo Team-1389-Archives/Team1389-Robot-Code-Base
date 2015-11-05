@@ -29,7 +29,9 @@ public abstract class Team1389RobotBase extends IterativeRobot {
    	public abstract RobotCode getCode();
    	
     public void robotInit() {    	
-    	BaseGlobals.robotCode = new RobotCodeHolder(getCode());
+    	RobotCode robotCode = getCode();
+    	BaseGlobals.robotCode = new RobotCodeHolder(robotCode);
+    	robotCode.setup();
     	BaseGlobals.robotBase = this;
 
     	BaseGlobals.robotCode.getTeleopBase().setupCommands();

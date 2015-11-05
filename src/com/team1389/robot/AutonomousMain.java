@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.team1389.base.auton.AutonMode;
 import com.team1389.base.auton.AutonomousBase;
+import com.team1389.robot.commands.DriveForwardCommand;
 
 import edu.wpi.first.wpilibj.command.Command;
 
@@ -22,7 +23,7 @@ public class AutonomousMain extends AutonomousBase{
 
 			@Override
 			public Command getCommand() {
-				return null;
+				return new DriveForwardCommand();
 			}
 
 			@Override
@@ -32,19 +33,6 @@ public class AutonomousMain extends AutonomousBase{
 			
 		});
 		
-		modes.add(new AutonMode(){
-
-			@Override
-			public Command getCommand() {
-				return null;
-			}
-
-			@Override
-			public String getName() {
-				return "stay still";
-			}
-			
-		});
 		return modes;
 	}
 }

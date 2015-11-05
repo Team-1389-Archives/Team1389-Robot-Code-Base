@@ -19,6 +19,8 @@ public class TeleopDrive extends Command{
 	protected void execute() {
 		double leftx = Inputs.driveStick.getLeftX();
 		double lefty = Inputs.driveStick.getLeftY();
+		System.out.println("leftx" + leftx);
+		System.out.println("lefty" + lefty);
 		
 		double leftSpeed = lefty + leftx;
 		double rightSpeed = lefty - leftx;

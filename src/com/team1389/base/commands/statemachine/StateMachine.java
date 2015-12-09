@@ -7,7 +7,7 @@ import java.util.Map;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
- * This class creates a command that represents a state machine. IT HAS NOT BEEN TESTED
+ * This class creates a command that represents a state machine.
  */
 public abstract class StateMachine extends Command{
 	
@@ -21,8 +21,10 @@ public abstract class StateMachine extends Command{
 		finished = false;
 		states = new HashMap<String, State>();
 		List<State> stateList = getStates();
+		System.out.println("initializing state machine, states are:");
 		for (State s : stateList){
 			states.put(s.getName(), s);
+			System.out.println(s.getName());
 		}
 		initializeState(startState());
 	}
@@ -30,7 +32,7 @@ public abstract class StateMachine extends Command{
 	@Override
 	protected void execute() {
 		if(!currentCommand.isRunning()){
-			initializeState(state.nextState());
+			nextState();
 		}
 	}
 
@@ -61,11 +63,11 @@ public abstract class StateMachine extends Command{
 		if (state == null){
 			throw new InvalidStateException(name + " is not a valid state name");
 		}
-		currentCommand = state.getCommand();
+		currentCommand = state;
 		currentCommand.start();
 	}
 	
-	abstract List<State> getStates();
-	abstract String startState();
+	public abstract List<State> getStates();
+	public abstract String startState();
 
 }

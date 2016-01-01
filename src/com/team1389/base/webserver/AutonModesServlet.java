@@ -23,7 +23,7 @@ public class AutonModesServlet extends JSONGetServlet<AutonModesServlet.AutonMod
 	}
 
 	@Override
-	AutonModesList onGet() {
+	public AutonModesList onGet() {
 		ArrayList<AutonInfo> autons = new ArrayList<AutonInfo>();
 
 		List<AutonMode> modes = BaseGlobals.robotCode.getAutonomousBase().getAutonModes();

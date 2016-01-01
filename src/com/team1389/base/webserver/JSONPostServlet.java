@@ -27,6 +27,6 @@ public abstract class JSONPostServlet<FromClient, ToClient> extends HttpServlet{
         gson.toJson(respObj, resp.getWriter());
 	}
 	
-	abstract ToClient onPost(FromClient fromClient);
-	abstract Class<FromClient> whatClassIsFromClient();
+	abstract public ToClient onPost(FromClient fromClient);
+	abstract public Class<FromClient> whatClassIsFromClient();
 }

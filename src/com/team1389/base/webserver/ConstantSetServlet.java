@@ -18,12 +18,12 @@ public class ConstantSetServlet extends JSONPostServlet<ConstantSetServlet.Const
 		}
 	}
 	@Override
-	Status onPost(Constant fromClient) {
+	public Status onPost(Constant fromClient) {
 		WebConstantManager.getInstance().setConstant(fromClient.name, fromClient.value);
 		return new Status(true);
 	}
 	@Override
-	Class<Constant> whatClassIsFromClient() {
+	public Class<Constant> whatClassIsFromClient() {
 		return Constant.class;
 	}
 }

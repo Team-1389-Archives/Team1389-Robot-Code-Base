@@ -13,7 +13,7 @@ public class ConstantGetServlet extends JSONGetServlet<ConstantGetServlet.Consta
 	}
 
 	@Override
-	Constants onGet() {
+	public Constants onGet() {
 		return new Constants(WebConstantManager.getInstance().getAllConstants());
 	}
 }

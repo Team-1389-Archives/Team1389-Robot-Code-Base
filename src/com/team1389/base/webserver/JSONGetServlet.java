@@ -22,6 +22,6 @@ public abstract class JSONGetServlet<ToClient> extends HttpServlet{
 
 	}
 	
-	abstract ToClient onGet();
+	abstract public ToClient onGet();
 	
 }

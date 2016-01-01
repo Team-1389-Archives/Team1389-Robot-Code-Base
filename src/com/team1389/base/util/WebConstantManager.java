@@ -1,5 +1,6 @@
 package com.team1389.base.util;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -25,7 +26,7 @@ public class WebConstantManager {
 		return constants.get(name);
 	}
 	public Map<String, String> getAllConstants(){
-		return constants;
+		return Collections.unmodifiableMap(constants);
 	}
 	
 }

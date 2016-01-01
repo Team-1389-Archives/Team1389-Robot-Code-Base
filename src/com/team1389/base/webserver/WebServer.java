@@ -12,6 +12,7 @@ import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
 
 import com.team1389.base.BaseConstants;
+import com.team1389.base.webserver.chart.ChartGetServlet;
 
 /**
  * runs a Jetty Webserver. See package-info.java file for more information.
@@ -40,6 +41,7 @@ public class WebServer {
 		addServlet("/setAuton", new AutonModeSetServlet());
 		addServlet("/getConstants", new ConstantGetServlet());
 		addServlet("/setConstant", new ConstantSetServlet());
+		addServlet("/getCharts", new ChartGetServlet());
 	}
 	
 	/*

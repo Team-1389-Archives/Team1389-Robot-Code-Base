@@ -16,12 +16,12 @@ public class AutonModeSetServlet extends JSONPostServlet<AutonModeSetServlet.Mod
 		}
 	}
 	@Override
-	Status onPost(Mode fromClient) {
+	public Status onPost(Mode fromClient) {
 		BaseGlobals.robotCode.getAutonomousBase().setSelectedAuton(fromClient.name);
 		return new Status(true);
 	}
 	@Override
-	Class<Mode> whatClassIsFromClient() {
+	public Class<Mode> whatClassIsFromClient() {
 		return Mode.class;
 	}
 

@@ -2,12 +2,23 @@
 function httpGetAsync(theUrl, callback)
 {
     var xmlHttp = new XMLHttpRequest();
-    xmlHttp.onreadystatechange = function() { 
+    xmlHttp.onreadystatechange = function() {
         if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
             callback(xmlHttp.responseText);
     }
-    xmlHttp.open("GET", theUrl, true); // true for asynchronous 
+    xmlHttp.open("GET", theUrl, true); // true for asynchronous
     xmlHttp.send(null);
+}
+
+function httpPostAsync(theUrl, data, callback)
+{
+    var xmlHttp = new XMLHttpRequest();
+    xmlHttp.onreadystatechange = function() {
+        if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
+            callback(xmlHttp.responseText);
+    }
+    xmlHttp.open("POST", theUrl, true); // true for asynchronous
+    xmlHttp.send(data);
 }
 
 var nameElementMap = {};
@@ -16,22 +27,51 @@ function makeConstantElement(name, value){
 	var div = document.createElement("div");
 	var nameP = document.createElement("p");
 	var valueP = document.createElement("p");
+	var editSubmitButton = document.createElement("button");
+	var input = document.createElement("input");
+	input.hidden = true;
+	
+	//create editing ability
+	editSubmitButton.innerText = "Edit";
+	var buttonMode = "Edit";
+	editSubmitButton.addEventListener("click", function(){
+	    if (buttonMode === "Edit") {
+	        buttonMode = "Submit";
+	        input.value = value;
+	        input.hidden = false;
+	    }
+	    else {
+	        buttonMode = "Edit";
+	        input.hidden = true;
+	        httpPostAsync("/servlet/setConstant",
+	            JSON.stringify({
+	                    name: name,
+	                    value: input.value
+	                }),
+	                function() {
+	                    makePage();
+	                });
+	    }
+	    editSubmitButton.innerText = buttonMode;
+	});
 	
 	nameP.innerText = name;
 	valueP.innerText = value;
 	
 	div.appendChild(nameP);
 	div.appendChild(valueP);
-	div.style.border = "1px solid black;";
+	div.appendChild(editSubmitButton);
+	div.appendChild(input);
+	div.style.border = "thick solid black";
 	return div;
 }
 
-window.onload = function(){
+function makePage(){
 	httpGetAsync("/servlet/getConstants", function(data){
-		var data = JSON.parse(data);
-		var constants = data.constants;
-		console.log(constants);
+		var dataObj = JSON.parse(data);
+		var constants = dataObj.constants;
 		var listDiv = document.querySelector("#constants-list");
+		listDiv.innerHTML = "";
 		
 		for (var name in constants){
 			var element = makeConstantElement(name, constants[name]);
@@ -39,4 +79,9 @@ window.onload = function(){
 			listDiv.appendChild(element);
 		}
 	});
+
+}
+
+window.onload = function(){
+    makePage();
 }

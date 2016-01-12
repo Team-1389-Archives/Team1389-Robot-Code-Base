@@ -7,86 +7,110 @@ In order for us at team1389 to add third party libraries, this file had to be mo
 
 <project name="FRC Deployment" default="deploy">
 
-  <!-- This bit of code gets the names of all files in the lib folder and puts them in a property called libs-->
-  <pathconvert pathsep=":"
+	<!-- This bit of code gets the names of all files in the lib folder and puts them in a property called libs-->
+	<pathconvert pathsep=":"
       property="libs">
-      <path>
-          <fileset dir="lib">
-              <include name="*"/>
-          </fileset>
-      </path>
-  </pathconvert>
-  
-  <property file="build.properties"/>
-  <property file="${user.home}/wpilib/wpilib.properties"/>
-  <property file="${user.home}/wpilib/java/${version}/ant/build.properties"/>
-	
-  <import file="${wpilib.ant.dir}/build.xml"/>
-	
-  <!-- The following stuff has been added by team1389 -->
+		<path>
+			<fileset dir="lib">
+				<include name="*"/>
+			</fileset>
+		</path>
+	</pathconvert>
 
-  <!-- This overrides the default jar target in the wpilib build.xml.
+	<property file="build.properties"/>
+	<property file="${user.home}/wpilib/wpilib.properties"/>
+	<property file="${user.home}/wpilib/java/${version}/ant/build.properties"/>
+
+	<import file="${wpilib.ant.dir}/build.xml"/>
+
+	<!-- The following stuff has been added by team1389 -->
+
+	<!-- This overrides the default jar target in the wpilib build.xml.
   It adds the Resources folder and libraries in the lib directory when the code is being deployed to a roborio.
   A few things have been changed from the default jar target -->
-  <target name="jar" depends="compile">
-    <echo>[athena-jar] Making jar ${dist.jar}.</echo>
-    <mkdir dir="${dist.dir}" />
-    <mkdir dir="${build.jars}" />
+	<target name="jar" depends="compile">
+		<echo>[athena-jar] Making jar ${dist.jar}.</echo>
+		<mkdir dir="${dist.dir}" />
+		<mkdir dir="${build.jars}" />
 
-    <echo>[athena-jar] Copying jars from ${classpath} to ${build.jars}.</echo>
-    <copy todir="${build.jars}" flatten="true" verbose="true">
-      <path>
-      <pathelement path="${classpath}"/>
-      </path>
-    </copy>
+		<echo>[athena-jar] Copying jars from ${classpath} to ${build.jars}.</echo>
+		<copy todir="${build.jars}" flatten="true" verbose="true">
+			<path>
+				<pathelement path="${classpath}"/>
+			</path>
+		</copy>
 
-    <jar destfile="${dist.jar}" update="false">
-      <manifest>
-      <attribute name="Main-Class" value="edu.wpi.first.wpilibj.RobotBase"/>
-      <attribute name="Robot-Class" value="${robot.class}"/>
-      <attribute name="Class-Path" value="."/>
-      </manifest>
+		<jar destfile="${dist.jar}" update="false">
+			<manifest>
+				<attribute name="Main-Class" value="edu.wpi.first.wpilibj.RobotBase"/>
+				<attribute name="Robot-Class" value="${robot.class}"/>
+				<attribute name="Class-Path" value="."/>
+			</manifest>
 
-      <fileset dir="${build.dir}" includes="**/*.class"/>
-      <zipgroupfileset dir="${build.jars}">
-        <include name="**/*.jar" />
-      </zipgroupfileset>
-    	
-      <!-- The following two things have been added by team1389. They add the libraries and Resources folder into the final jar.-->
-    	
-	  <zipgroupfileset dir="${lib.dir}">
-	  	<include name="**/*.jar"/>
-	  </zipgroupfileset>
-      <fileset dir="${resources.dir}"/>
-    </jar>
-  </target>
-	
-	
-  <target name="jar-for-simulation" depends="compile">
-	<echo>[jar-for-simulation] Building jar using custom team1389 stuff.</echo>
+			<fileset dir="${build.dir}" includes="**/*.class"/>
+			<zipgroupfileset dir="${build.jars}">
+				<include name="**/*.jar" />
+			</zipgroupfileset>
 
-	<jar destfile="${simulation.dist.jar}">
-	  <manifest>
-		<attribute name="Built-By" value="${user.name}"/>
-		<attribute name="Robot-Class" value="${robot.class}"/>
-		<attribute name="Main-Class" value="edu.wpi.first.wpilibj.RobotBase"/>
-	  </manifest>
-	  <fileset dir="${build.dir}" />
-	  <zipgroupfileset dir="${wpilib.sim.lib}">
-	  	<include name="**/*.jar" />
-	  </zipgroupfileset>
-		
-		
-	  <!-- The following two things have been added by team1389 from the default jar-for-simulation target.
+			<!-- The following two things have been added by team1389. They add the libraries and Resources folder into the final jar.-->
+
+			<zipgroupfileset dir="${lib.dir}">
+				<include name="**/*.jar"/>
+			</zipgroupfileset>
+			<fileset dir="${resources.dir}"/>
+		</jar>
+	</target>
+
+
+	<target name="jar-for-simulation" depends="compile">
+		<echo>[jar-for-simulation] Building jar using custom team1389 stuff.</echo>
+
+		<jar destfile="${simulation.dist.jar}">
+			<manifest>
+				<attribute name="Built-By" value="${user.name}"/>
+				<attribute name="Robot-Class" value="${robot.class}"/>
+				<attribute name="Main-Class" value="edu.wpi.first.wpilibj.RobotBase"/>
+			</manifest>
+			<fileset dir="${build.dir}" />
+			<zipgroupfileset dir="${wpilib.sim.lib}">
+				<include name="**/*.jar" />
+			</zipgroupfileset>
+
+
+			<!-- The following two things have been added by team1389 from the default jar-for-simulation target.
 	  the zipgroupfileset contains all jars in the lib folder so that the program can access jetty and stuff.
 	  The fileset allows the running program to access the files in the Resources folder-->
-	  <zipgroupfileset dir="${lib.dir}">
-	  	<include name="**/*.jar"/>
-	  </zipgroupfileset>
-      <fileset dir="${resources.dir}"/>
-		
-		
-	</jar>
-  </target>
-  
-</project> 
+			<zipgroupfileset dir="${lib.dir}">
+				<include name="**/*.jar"/>
+			</zipgroupfileset>
+			<fileset dir="${resources.dir}"/>
+
+
+		</jar>
+	</target>
+	
+	<target name="jar-as-lib">
+		<echo>[athena-jar] Copying jars from ${classpath} to ${build.jars}.</echo>
+		<copy todir="${build.jars}" flatten="true" verbose="true">
+			<path>
+				<pathelement path="${classpath}"/>
+			</path>
+		</copy>
+
+		<jar destfile="${export.jar}" update="false">
+			<fileset dir="${build.dir}" includes="**/*.class"/>
+			<zipgroupfileset dir="${build.jars}">
+				<include name="**/*.jar" />
+			</zipgroupfileset>
+
+			<!-- The following two things have been added by team1389. They add the libraries and Resources folder into the final jar.-->
+
+			<zipgroupfileset dir="${lib.dir}">
+				<include name="**/*.jar"/>
+			</zipgroupfileset>
+			<fileset dir="${resources.dir}"/>
+		</jar>
+	</target>
+
+
+</project>

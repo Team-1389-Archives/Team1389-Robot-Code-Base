@@ -5,14 +5,18 @@ import edu.wpi.first.wpilibj.command.Command;
 public abstract class TeleopBase {
 	Command command;
 
-	TeleopBase(){
+	public TeleopBase(){
 		command = provideCommand();
 	}
 	public void start(){
-		command.start();
+		if (command != null){
+			command.start();
+		}
 	}
 	public void disable() {
-		command.cancel();
+		if (command != null){
+			command.cancel();
+		}
 	}
 	public abstract Command provideCommand();
 }

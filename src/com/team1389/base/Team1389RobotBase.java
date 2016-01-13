@@ -34,8 +34,6 @@ public abstract class Team1389RobotBase extends IterativeRobot {
     	robotCode.setup();
     	BaseGlobals.robotBase = this;
 
-    	BaseGlobals.robotCode.getTeleopBase().setupCommands();
-
     	Server a = new Server();
     	
     	mode = Mode.DISABLED;
@@ -73,6 +71,7 @@ public abstract class Team1389RobotBase extends IterativeRobot {
 		case DISABLED:
 			break;
 		case TELEOP:
+			disabledTeleop();
 			break;
 		case TEST:
 			disabledTest();
@@ -80,6 +79,10 @@ public abstract class Team1389RobotBase extends IterativeRobot {
     	}
     	mode = Mode.DISABLED;
     }
+
+	private void disabledTeleop() {
+		BaseGlobals.robotCode.getTeleopBase().disable();
+	}
 
 	private void disabledTest() {
     	//TODO cancel whatever command was running

@@ -30,15 +30,27 @@ public class ConfigurableConstant<T>{
 	public T get(){
 		String dashboardValue = SmartDashboard.getString(name);
 		String webValue = WebConstantManager.getInstance().getConstant(name);
-		if (!webValue.equals(oldValue)){
+		String usedValue;
+		if (webValue != null && !webValue.equals(oldValue)){
 			if (!dashboardValue.equals(oldValue)){
 				System.out.println("warning: constant " + name + " set from both smartdashboard and"
 						+ "web dashboard, using value from webdashboard.");
 			}
-			return serializer.toT(webValue);
+			usedValue = webValue;
 		} else {
-			return serializer.toT(dashboardValue);
+			usedValue = dashboardValue;
 		}
+		
+		T value;
+		try{
+			value = serializer.toT(usedValue);
+		} catch (Exception e){
+			System.out.println("error reading constant " + name + ": " + e.getMessage());
+			//TODO: display that fact that there was an error to user in some way
+			value = serializer.toT(oldValue);
+		}
+		set(value);
+		return value;
 	}
 	public void set(T value){
 		String asString = serializer.toString(value);

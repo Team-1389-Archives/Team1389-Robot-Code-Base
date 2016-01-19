@@ -1,7 +1,7 @@
 #Overview
 This project contains base code for team1389 robot projects. The code is general and useful for all FRC robot programs.
 
-To make a project using this base, copy the project, delete git from it, and reinitialize git as a new repository.
+To make a project that uses this library, you need to clone the Team1389-Base-Project-Template and follow the intructions in it's README
 
 #Features
 - basic command based framework setup, with a place to put teleop commands and a way to create auton modes

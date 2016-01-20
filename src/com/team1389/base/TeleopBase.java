@@ -6,11 +6,13 @@ public abstract class TeleopBase {
 	Command command;
 
 	public TeleopBase(){
-		command = provideCommand();
 	}
 	public void start(){
+		command = provideCommand();
 		if (command != null){
 			command.start();
+		} else {
+			System.out.println("teleop command is null");
 		}
 	}
 	public void disable() {

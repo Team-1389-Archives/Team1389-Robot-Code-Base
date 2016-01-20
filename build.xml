@@ -88,8 +88,8 @@ In order for us at team1389 to add third party libraries, this file had to be mo
 
 		</jar>
 	</target>
-	
-	<target name="jar-as-lib">
+
+	<target name="jar-as-lib" depends="compile">
 		<echo>[athena-jar] Copying jars from ${classpath} to ${build.jars}.</echo>
 		<copy todir="${build.jars}" flatten="true" verbose="true">
 			<path>
@@ -109,8 +109,12 @@ In order for us at team1389 to add third party libraries, this file had to be mo
 				<include name="**/*.jar"/>
 			</zipgroupfileset>
 			<fileset dir="${resources.dir}"/>
+			<fileset dir="${src.dir}" includes="**/*.java"/>
+			<fileset dir="${build.dir}" includes="**/*.class"/>
 		</jar>
 	</target>
+
+
 
 
 </project>

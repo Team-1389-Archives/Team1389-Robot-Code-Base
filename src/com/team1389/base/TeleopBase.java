@@ -8,6 +8,7 @@ public abstract class TeleopBase {
 	public TeleopBase(){
 	}
 	public void start(){
+		setupTeleop();
 		command = provideCommand();
 		if (command != null){
 			command.start();
@@ -21,4 +22,5 @@ public abstract class TeleopBase {
 		}
 	}
 	public abstract Command provideCommand();
+	public abstract void setupTeleop();
 }

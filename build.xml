@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!-- Note to people wondering what this file is:
-When you make a WPILIB project in eclipse, it automatically generates this file. It defines how the robot program is compiled and sent to the roborio.
-It is written for a build tool called Ant.
-In order for us at team1389 to add third party libraries, this file had to be modified from the default. The comments below explain how that works.-->
+Files called build.xml are scripts for a build tool called "ant" (google it).
+The job of this file is to describe how the java program is compiled and stuffed into a jar file.
 
-<project name="FRC Deployment" default="deploy">
+This file is not meant to be run by itself because this is the base project.
+Projects that use this base project, created from the template project, should have a build.xml file
+that automatically calls this one.-->
+
+<project name="FRC Deployment">
 
 	<!-- This bit of code gets the names of all files in the lib folder and puts them in a property called libs-->
 	<pathconvert pathsep=":" property="userLibs">
@@ -25,70 +28,10 @@ In order for us at team1389 to add third party libraries, this file had to be mo
 
 	<!-- The following stuff has been added by team1389 -->
 
-	<!-- This overrides the default jar target in the wpilib build.xml.
-  It adds the Resources folder and libraries in the lib directory when the code is being deployed to a roborio.
-  A few things have been changed from the default jar target -->
-	<target name="jar" depends="compile">
-		<echo>[athena-jar] Making jar ${dist.jar}.</echo>
-		<mkdir dir="${dist.dir}" />
-		<mkdir dir="${build.jars}" />
-
-		<echo>[athena-jar] Copying jars from ${classpath} to ${build.jars}.</echo>
-		<copy todir="${build.jars}" flatten="true" verbose="true">
-			<path>
-				<pathelement path="${classpath}" />
-			</path>
-		</copy>
-
-		<jar destfile="${dist.jar}" update="false">
-			<manifest>
-				<attribute name="Main-Class" value="edu.wpi.first.wpilibj.RobotBase" />
-				<attribute name="Robot-Class" value="${robot.class}" />
-				<attribute name="Class-Path" value="." />
-			</manifest>
-
-			<fileset dir="${build.dir}" includes="**/*.class" />
-			<zipgroupfileset dir="${build.jars}">
-				<include name="**/*.jar" />
-			</zipgroupfileset>
-
-			<!-- The following two things have been added by team1389. They add the libraries and Resources folder into the final jar.-->
-
-			<zipgroupfileset dir="${lib.dir}">
-				<include name="**/*.jar" />
-			</zipgroupfileset>
-			<fileset dir="${resources.dir}" />
-		</jar>
-	</target>
-
-
-	<target name="jar-for-simulation" depends="compile">
-		<echo>[jar-for-simulation] Building jar using custom team1389 stuff.</echo>
-
-		<jar destfile="${simulation.dist.jar}">
-			<manifest>
-				<attribute name="Built-By" value="${user.name}" />
-				<attribute name="Robot-Class" value="${robot.class}" />
-				<attribute name="Main-Class" value="edu.wpi.first.wpilibj.RobotBase" />
-			</manifest>
-			<fileset dir="${build.dir}" />
-			<zipgroupfileset dir="${wpilib.sim.lib}">
-				<include name="**/*.jar" />
-			</zipgroupfileset>
-
-
-			<!-- The following two things have been added by team1389 from the default jar-for-simulation target.
-	  the zipgroupfileset contains all jars in the lib folder so that the program can access jetty and stuff.
-	  The fileset allows the running program to access the files in the Resources folder-->
-			<zipgroupfileset dir="${lib.dir}">
-				<include name="**/*.jar" />
-			</zipgroupfileset>
-			<fileset dir="${resources.dir}" />
-
-
-		</jar>
-	</target>
-
+	<!--
+		This target is called by the build file in Team1389-Base-Project-Template.
+		It compiles the Base as a lib and puts in a jar in the export folder.
+	-->
 	<target name="jar-as-lib" depends="clean, compile">
 		<echo>[athena-jar] Making Jar for export as lib ${build.jars}</echo>
 		<mkdir dir="${build.jars}" />

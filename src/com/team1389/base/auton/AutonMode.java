@@ -1,6 +1,8 @@
 package com.team1389.base.auton;
 
-import edu.wpi.first.wpilibj.command.Command;
+import org.strongback.command.Command;
+
+import com.team1389.base.IO;
 
 /**
  * Represents one mode for what the robot can do in the autonomous stage of the competition. 
@@ -9,7 +11,7 @@ public interface AutonMode {
 	/**
 	 * @return the command that gets run when the autonomous mode runs
 	 */
-	public Command getCommand();
+	public Command getCommand(IO io);
 	/**
 	 * @return the human readable name of the mode
 	 */

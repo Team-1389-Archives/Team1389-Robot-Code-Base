@@ -5,19 +5,21 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import edu.wpi.first.wpilibj.command.Command;
+import org.strongback.Strongback;
+import org.strongback.command.Command;
 
-public abstract class AutonomousBase {
+import com.team1389.base.IO;
+
+public abstract class AutonomousBase <IOLayoutType extends IO>{
 	Map<String, AutonMode> modes;
 
 	String selectedAutonName;
 	AutonMode runningAutonMode;
 	Command runningCommand;
 
-	public AutonomousBase() {
-		System.out.println("constructing");
+	public AutonomousBase(IOLayoutType io) {
 		modes = new HashMap<String, AutonMode>();
-		List<AutonMode> modesList = provideAutonModes();
+		List<AutonMode> modesList = provideAutonModes(io);
 		modesList.add(new DoNothingAuton());
 
 		for (AutonMode mode : modesList){
@@ -36,15 +38,17 @@ public abstract class AutonomousBase {
 	public List<AutonMode> getAutonModes(){
 		return new ArrayList<AutonMode>(modes.values());
 	}
-	protected abstract List<AutonMode> provideAutonModes();
-	public void autonStart(){
+	public void autonStart(IO io){
 		runningAutonMode = modes.get(selectedAutonName);
-		runningCommand = runningAutonMode.getCommand();
-		runningCommand.start();
+		runningCommand = runningAutonMode.getCommand(io);
+		Strongback.restart();
+		Strongback.submit(runningCommand);
 	}
 	public void autonEnd(){
 		if (runningAutonMode.shouldCancelCommandsOnAutonEnd()){
-			runningCommand.cancel();
+			Strongback.killAllCommands();
 		}
 	}
+
+	protected abstract List<AutonMode> provideAutonModes(IOLayoutType io);
 }

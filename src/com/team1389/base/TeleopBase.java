@@ -1,26 +1,23 @@
 package com.team1389.base;
 
-import edu.wpi.first.wpilibj.command.Command;
+import org.strongback.Strongback;
+import org.strongback.command.Command;
 
-public abstract class TeleopBase {
+public abstract class TeleopBase<IOLayoutType extends IO>{
 	Command command;
-
-	public TeleopBase(){
-	}
-	public void start(){
-		setupTeleop();
-		command = provideCommand();
+	public void start(IOLayoutType io){
+		setupTeleop(io);
+		command = provideCommand(io);
+		Strongback.restart();
 		if (command != null){
-			command.start();
+			Strongback.submit(command);
 		} else {
 			System.out.println("teleop command is null");
 		}
 	}
 	public void disable() {
-		if (command != null){
-			command.cancel();
-		}
+		Strongback.killAllCommands();
 	}
-	public abstract Command provideCommand();
-	public abstract void setupTeleop();
+	public abstract Command provideCommand(IOLayoutType io);
+	public abstract void setupTeleop(IOLayoutType io);
 }

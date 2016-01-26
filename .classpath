@@ -12,5 +12,6 @@
 	<classpathentry kind="lib" path="lib/jetty-servlet-9.3.2.v20150730.jar"/>
 	<classpathentry kind="lib" path="lib/jetty-util-9.3.2.v20150730.jar"/>
 	<classpathentry kind="lib" path="lib/gson-2.3.1.jar"/>
+	<classpathentry kind="lib" path="lib/strongback.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

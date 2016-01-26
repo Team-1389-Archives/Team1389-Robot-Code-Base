@@ -1,45 +1,32 @@
 
 package com.team1389.base;
 
-import org.eclipse.jetty.server.Server;
-
 import com.team1389.base.webserver.WebServer;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
-import edu.wpi.first.wpilibj.command.Scheduler;
-import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 
 /*
  * This class is the base of all of the code. Everything else is called from here.
  */
 
-public abstract class Team1389RobotBase extends IterativeRobot {
-	
-	enum Mode{
-		AUTON,
-		TELEOP,
-		TEST,
-		DISABLED
-	}
+public abstract class Team1389RobotBase<IOLayoutType extends IO> extends IterativeRobot {
 	
 	private WebServer server;
 	
+	RobotCode<IOLayoutType> robotCode;
+	
 	private Mode mode;
 	
-   	public abstract RobotCode getCode();
+   	public abstract RobotCode<IOLayoutType> getCode();
    	
-    public void robotInit() {    	
-    	RobotCode robotCode = getCode();
-    	BaseGlobals.robotCode = new RobotCodeHolder(robotCode);
+    public void robotInit() {
+    	robotCode = getCode();
     	robotCode.setup();
-    	BaseGlobals.robotBase = this;
 
-    	Server a = new Server();
-    	
     	mode = Mode.DISABLED;
     	
     	//start webserver
-    	server = new WebServer();
+    	server = new WebServer(robotCode);
     	server.start();
     	
     }
@@ -47,17 +34,17 @@ public abstract class Team1389RobotBase extends IterativeRobot {
     @Override
     public void autonomousInit() {
     	mode = Mode.AUTON;
-    	BaseGlobals.robotCode.getAutonomousBase().autonStart();
+    	robotCode.getAutonomousBase().autonStart(robotCode.getIO());
     }
     private void disabledAuton() {
-    	BaseGlobals.robotCode.getAutonomousBase().autonEnd();
+    	robotCode.getAutonomousBase().autonEnd();
 	}
 
 
     @Override
     public void teleopInit() {
     	mode = Mode.TELEOP;
-    	BaseGlobals.robotCode.getTeleopBase().start();
+    	robotCode.getTeleopBase().start(robotCode.getIO());
     }
     @Override
     public void testInit(){
@@ -81,7 +68,7 @@ public abstract class Team1389RobotBase extends IterativeRobot {
     }
 
 	private void disabledTeleop() {
-		BaseGlobals.robotCode.getTeleopBase().disable();
+		robotCode.getTeleopBase().disable();
 	}
 
 	private void disabledTest() {
@@ -91,16 +78,12 @@ public abstract class Team1389RobotBase extends IterativeRobot {
 	/*Each of these functions is called periodically in their respective modes.
      * The scheduler needs to be run so that Commands which are scheduled will run.*/
     public void teleopPeriodic() {
-        Scheduler.getInstance().run();
     }
     public void autonomousPeriodic() {
-        Scheduler.getInstance().run();
     }
     public void testPeriodic() {
-        LiveWindow.run();//TODO figure out what this is, should it happen in other modes?
-        Scheduler.getInstance().run();
+//        LiveWindow.run();//TODO figure out what this is, should it happen in other modes?
     }
 	public void disabledPeriodic() {
-		Scheduler.getInstance().run();
 	}
 }

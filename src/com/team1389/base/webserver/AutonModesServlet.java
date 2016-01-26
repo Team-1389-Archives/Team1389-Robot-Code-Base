@@ -3,10 +3,17 @@ package com.team1389.base.webserver;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.team1389.base.BaseGlobals;
+import com.team1389.base.RobotCode;
 import com.team1389.base.auton.AutonMode;
 
 public class AutonModesServlet extends JSONGetServlet<AutonModesServlet.AutonModesList>{
+	
+	RobotCode robotCode;
+	
+	public AutonModesServlet(RobotCode code) {
+		this.robotCode = code;
+	}
+
 	static class AutonInfo{
 		String autonName;
 		AutonInfo(String autonName){
@@ -26,8 +33,8 @@ public class AutonModesServlet extends JSONGetServlet<AutonModesServlet.AutonMod
 	public AutonModesList onGet() {
 		ArrayList<AutonInfo> autons = new ArrayList<AutonInfo>();
 
-		List<AutonMode> modes = BaseGlobals.robotCode.getAutonomousBase().getAutonModes();
-		String selectedAuton = BaseGlobals.robotCode.getAutonomousBase().getSelectedAuton();
+		List<AutonMode> modes = robotCode.getAutonomousBase().getAutonModes();
+		String selectedAuton = robotCode.getAutonomousBase().getSelectedAuton();
 
 		for (AutonMode mode: modes){
 			AutonInfo info = new AutonInfo(mode.getName());

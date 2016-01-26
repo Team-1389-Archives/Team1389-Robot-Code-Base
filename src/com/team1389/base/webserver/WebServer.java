@@ -12,6 +12,7 @@ import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
 
 import com.team1389.base.BaseConstants;
+import com.team1389.base.RobotCode;
 import com.team1389.base.webserver.chart.ChartGetServlet;
 
 /**
@@ -22,7 +23,7 @@ public class WebServer {
 	Server server;
 	ServletContextHandler servletHandler;
 
-	public WebServer(){
+	public WebServer(RobotCode robotCode){
 		
 		server = new Server(5800);//5800 is one of the ports FRC allows us to use for our own purposes
 		servletHandler = new ServletContextHandler();
@@ -37,8 +38,8 @@ public class WebServer {
 		
 		server.setHandler(handlerCollection);
 		
-		addServlet("/autonModes", new AutonModesServlet());
-		addServlet("/setAuton", new AutonModeSetServlet());
+		addServlet("/autonModes", new AutonModesServlet(robotCode));
+		addServlet("/setAuton", new AutonModeSetServlet(robotCode));
 		addServlet("/getConstants", new ConstantGetServlet());
 		addServlet("/setConstant", new ConstantSetServlet());
 		addServlet("/getCharts", new ChartGetServlet());

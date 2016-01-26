@@ -10,7 +10,7 @@ that automatically calls this one.-->
 
 <project name="FRC Deployment">
 
-	<!-- This bit of code gets the names of all files in the lib folder and puts them in a property called libs-->
+	<!-- This bit of code gets the names of all files in the lib folder and puts them in a property called userLibs-->
 	<pathconvert pathsep=":" property="userLibs">
 		<path>
 			<fileset dir="lib">
@@ -25,8 +25,6 @@ that automatically calls this one.-->
 	<property file="${user.home}/wpilib/java/${version}/ant/build.properties" />
 
 	<import file="${wpilib.ant.dir}/build.xml" />
-
-	<!-- The following stuff has been added by team1389 -->
 
 	<!--
 		This target is called by the build file in Team1389-Base-Project-Template.
@@ -60,8 +58,5 @@ that automatically calls this one.-->
 			<fileset dir="${build.dir}" includes="**/*.class" />
 		</jar>
 	</target>
-
-
-
 
 </project>

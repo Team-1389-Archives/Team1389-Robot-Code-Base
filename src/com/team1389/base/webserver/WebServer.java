@@ -52,11 +52,14 @@ public class WebServer {
 	private String getAppPath(){
 		String appDir;
 		File dirInIde = new File(BaseConstants.resourceFolder);//this is where the resources are found if it is run from the ide
+		File dirInIde2 = new File(BaseConstants.resourceBaseFolder);
         URL dirInJar = WebServer.class.getClassLoader().getResource(BaseConstants.webappFolder);//this is where they are found if run from a jar
         if (dirInIde.exists()){
         	appDir = dirInIde.getAbsolutePath() + "/" + BaseConstants.webappFolder;
         } else if (dirInJar != null){
         	appDir = dirInJar.toExternalForm();
+        } else if(dirInIde2.exists()) {
+        	appDir = dirInIde2.getAbsolutePath() + "/" + BaseConstants.webappFolder;
         } else {
         	throw new RuntimeException("could not find server resources");
         }

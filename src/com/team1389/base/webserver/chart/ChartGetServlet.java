@@ -2,7 +2,6 @@ package com.team1389.base.webserver.chart;
 
 import java.util.Map;
 
-import com.team1389.base.util.WebChartManager;
 import com.team1389.base.webserver.JSONGetServlet;
 
 public class ChartGetServlet extends JSONGetServlet<Map<String, Chart>>{

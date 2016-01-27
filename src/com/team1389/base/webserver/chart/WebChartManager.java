@@ -1,10 +1,8 @@
-package com.team1389.base.util;
+package com.team1389.base.webserver.chart;
 
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
-
-import com.team1389.base.webserver.chart.Chart;
 
 public class WebChartManager {
 	private static WebChartManager chartManager;

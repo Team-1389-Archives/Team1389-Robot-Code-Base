@@ -8,18 +8,18 @@ import java.util.Map;
 import org.strongback.Strongback;
 import org.strongback.command.Command;
 
-import com.team1389.base.IO;
+import com.team1389.base.RobotLayoutType;
 
-public abstract class AutonomousBase <IOLayoutType extends IO>{
+public abstract class AutonomousBase{
 	Map<String, AutonMode> modes;
 
 	String selectedAutonName;
 	AutonMode runningAutonMode;
 	Command runningCommand;
 
-	public AutonomousBase(IOLayoutType io) {
+	public AutonomousBase() {
 		modes = new HashMap<String, AutonMode>();
-		List<AutonMode> modesList = provideAutonModes(io);
+		List<AutonMode> modesList = provideAutonModes();
 		modesList.add(new DoNothingAuton());
 
 		for (AutonMode mode : modesList){
@@ -38,9 +38,9 @@ public abstract class AutonomousBase <IOLayoutType extends IO>{
 	public List<AutonMode> getAutonModes(){
 		return new ArrayList<AutonMode>(modes.values());
 	}
-	public void autonStart(IO io){
+	public void autonStart(){
 		runningAutonMode = modes.get(selectedAutonName);
-		runningCommand = runningAutonMode.getCommand(io);
+		runningCommand = runningAutonMode.getCommand();
 		Strongback.restart();
 		Strongback.submit(runningCommand);
 	}
@@ -50,5 +50,5 @@ public abstract class AutonomousBase <IOLayoutType extends IO>{
 		}
 	}
 
-	protected abstract List<AutonMode> provideAutonModes(IOLayoutType io);
+	protected abstract List<AutonMode> provideAutonModes();
 }

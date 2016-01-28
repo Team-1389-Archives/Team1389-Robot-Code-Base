@@ -11,15 +11,15 @@ import edu.wpi.first.wpilibj.IterativeRobot;
  * This class is the base of all of the code. Everything else is called from here.
  */
 
-public abstract class Team1389RobotBase<IOLayoutType extends IO> extends IterativeRobot {
+public abstract class Team1389RobotBase extends IterativeRobot {
 	
 	private WebServer server;
 	
-	RobotCode<IOLayoutType> robotCode;
+	RobotCode robotCode;
 	
 	private Mode mode;
 	
-   	public abstract RobotCode<IOLayoutType> getCode();
+   	public abstract RobotCode getCode();
    	
     public void robotInit() {
     	robotCode = getCode();
@@ -39,7 +39,7 @@ public abstract class Team1389RobotBase<IOLayoutType extends IO> extends Iterati
     @Override
     public void autonomousInit() {
     	mode = Mode.AUTON;
-    	robotCode.getAutonomousBase().autonStart(robotCode.getIO());
+    	robotCode.getAutonomousBase().autonStart();
     }
     private void disabledAuton() {
     	robotCode.getAutonomousBase().autonEnd();
@@ -49,7 +49,7 @@ public abstract class Team1389RobotBase<IOLayoutType extends IO> extends Iterati
     @Override
     public void teleopInit() {
     	mode = Mode.TELEOP;
-    	robotCode.getTeleopBase().start(robotCode.getIO());
+    	robotCode.getTeleopBase().start();
     }
     @Override
     public void testInit(){

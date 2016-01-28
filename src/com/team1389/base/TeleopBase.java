@@ -3,11 +3,11 @@ package com.team1389.base;
 import org.strongback.Strongback;
 import org.strongback.command.Command;
 
-public abstract class TeleopBase<IOLayoutType extends IO>{
+public abstract class TeleopBase{
 	Command command;
-	public void start(IOLayoutType io){
-		setupTeleop(io);
-		command = provideCommand(io);
+	public void start(){
+		setupTeleop();
+		command = provideCommand();
 		Strongback.restart();
 		if (command != null){
 			Strongback.submit(command);
@@ -18,6 +18,6 @@ public abstract class TeleopBase<IOLayoutType extends IO>{
 	public void disable() {
 		Strongback.killAllCommands();
 	}
-	public abstract Command provideCommand(IOLayoutType io);
-	public abstract void setupTeleop(IOLayoutType io);
+	public abstract Command provideCommand();
+	public abstract void setupTeleop();
 }

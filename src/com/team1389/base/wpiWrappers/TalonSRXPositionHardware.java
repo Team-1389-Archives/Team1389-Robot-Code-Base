@@ -8,20 +8,24 @@ import edu.wpi.first.wpilibj.CANTalon.TalonControlMode;
  */
 public class TalonSRXPositionHardware implements PositionController{
 	CANTalon wpiTalon;
+	double ticksPerDegree;
 	
-	public TalonSRXPositionHardware(CANTalon wpiTalon) {
+	public TalonSRXPositionHardware(CANTalon wpiTalon, double ticksPerDegree) {
 		this.wpiTalon = wpiTalon;
 		this.wpiTalon.changeControlMode(TalonControlMode.Position);
+		this.ticksPerDegree = ticksPerDegree;
 	}
 
 	@Override
 	public void setPosition(double position) {
-		wpiTalon.set(position);
+		double hardwarePosition = position * ticksPerDegree;
+		wpiTalon.set(hardwarePosition);
 	}
 
 	@Override
 	public double getPosition() {
-		return wpiTalon.getPosition();
+		double hardwarePosition = wpiTalon.getPosition();
+		return hardwarePosition / ticksPerDegree;
 	}
 
 	@Override

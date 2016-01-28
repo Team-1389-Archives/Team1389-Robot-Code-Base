@@ -8,7 +8,7 @@ public class Simulator{
 	/*
 	 * simple simulator for the purpose of testing the webserver
 	 */
-	public static <IOLayoutType extends IO> void simulate(RobotCode<IOLayoutType> robotCode, Mode mode){
+	public static void simulate(RobotCode robotCode, Mode mode){
     	//configure Strongback
     	Strongback.configure().recordNoData()
     		.recordNoEvents();
@@ -19,12 +19,12 @@ public class Simulator{
 		
 		switch (mode) {
 		case AUTON:
-			robotCode.getAutonomousBase().autonStart(robotCode.getIO());
+			robotCode.getAutonomousBase().autonStart();
 			break;
 		case DISABLED:
 			break;
 		case TELEOP:
-			robotCode.getTeleopBase().start(robotCode.getIO());
+			robotCode.getTeleopBase().start();
 			break;
 		case TEST:
 			//TODO: make test mode

@@ -2,12 +2,12 @@ package com.team1389.base.auton;
 
 import org.strongback.command.Command;
 
-import com.team1389.base.IO;
+import com.team1389.base.RobotLayoutType;
 
 public class DoNothingAuton implements AutonMode{
 
 	@Override
-	public Command getCommand(IO io) {
+	public Command getCommand() {
 		return Command.create(() -> {});
 	}
 

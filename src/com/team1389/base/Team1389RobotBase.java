@@ -1,8 +1,6 @@
 
 package com.team1389.base;
 
-import org.strongback.Strongback;
-
 import com.team1389.base.webserver.WebServer;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
@@ -32,8 +30,7 @@ public abstract class Team1389RobotBase extends IterativeRobot {
     	server.start();
     	
     	//configure Strongback
-    	Strongback.configure().recordNoData()
-    		.recordNoEvents();
+    	Configuration.configureStrongback();
     }
     
     @Override

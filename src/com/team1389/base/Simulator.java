@@ -1,7 +1,5 @@
 package com.team1389.base;
 
-import org.strongback.Strongback;
-
 import com.team1389.base.webserver.WebServer;
 
 public class Simulator{
@@ -10,8 +8,7 @@ public class Simulator{
 	 */
 	public static void simulate(RobotCode robotCode, Mode mode){
     	//configure Strongback
-    	Strongback.configure().recordNoData()
-    		.recordNoEvents();
+		Configuration.configureStrongback();
 
 		
 		WebServer server = new WebServer(robotCode);

@@ -25,17 +25,19 @@ public class WebServer {
 	Server server;
 	ServletContextHandler servletHandler;
 
-	public WebServer(RobotCode robotCode){//TODO: make paths get passed to constructor to make hackery unneccesary
+	public WebServer(RobotCode robotCode, String baseResources, String projectSpecificResources){//TODO: make paths get passed to constructor to make hackery unneccesary
+		System.out.println("Initiating webserver with baseRecources=" + baseResources + 
+				" projectSpecificResources=" + projectSpecificResources);
 		
 		server = new Server(5800);//5800 is one of the ports FRC allows us to use for our own purposes
 		servletHandler = new ServletContextHandler();
 		servletHandler.setContextPath("/servlet");
 		
 		ResourceHandler baseResourceHandler = new ResourceHandler();
-		baseResourceHandler.setResourceBase(getAppPath());
+		baseResourceHandler.setResourceBase(baseResources);
 		
 		ResourceHandler projectResourceHandler = new ResourceHandler();
-		projectResourceHandler.setResourceBase("Resources/webapp/projectSpecific/");//TODO: um yeah this string should be stored somewhere
+		projectResourceHandler.setResourceBase(projectSpecificResources);//TODO: um yeah this string should be stored somewhere
 		ContextHandler projResCtx = new ContextHandler("/projectSpecific");//TODO: refactor this string to somewhere
 		projResCtx.setHandler(projectResourceHandler);
 		

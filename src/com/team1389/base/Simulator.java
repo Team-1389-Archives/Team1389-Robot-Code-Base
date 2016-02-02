@@ -6,12 +6,10 @@ public class Simulator{
 	/*
 	 * simple simulator for the purpose of testing the webserver
 	 */
-	public static void simulate(RobotCode robotCode, Mode mode){
+	public static void simulate(RobotCode robotCode, Mode mode, WebServer server){
     	//configure Strongback
 		Configuration.configureStrongback();
 
-		
-		WebServer server = new WebServer(robotCode);
 		server.start();
 		
 		switch (mode) {

@@ -6,6 +6,7 @@ import java.net.URL;
 import javax.servlet.Servlet;
 
 import org.eclipse.jetty.server.Server;
+import org.eclipse.jetty.server.handler.ContextHandler;
 import org.eclipse.jetty.server.handler.HandlerCollection;
 import org.eclipse.jetty.server.handler.ResourceHandler;
 import org.eclipse.jetty.servlet.ServletContextHandler;
@@ -18,23 +19,30 @@ import com.team1389.base.webserver.chart.ChartGetServlet;
 /**
  * runs a Jetty Webserver. See package-info.java file for more information.
  */
+//TODO: I swear ill fix up this code someday
 public class WebServer {
 
 	Server server;
 	ServletContextHandler servletHandler;
 
-	public WebServer(RobotCode robotCode){
+	public WebServer(RobotCode robotCode){//TODO: make paths get passed to constructor to make hackery unneccesary
 		
 		server = new Server(5800);//5800 is one of the ports FRC allows us to use for our own purposes
 		servletHandler = new ServletContextHandler();
 		servletHandler.setContextPath("/servlet");
 		
-		ResourceHandler resourceHandler = new ResourceHandler();
-		resourceHandler.setResourceBase(getAppPath());
+		ResourceHandler baseResourceHandler = new ResourceHandler();
+		baseResourceHandler.setResourceBase(getAppPath());
+		
+		ResourceHandler projectResourceHandler = new ResourceHandler();
+		projectResourceHandler.setResourceBase("Resources/webapp/projectSpecific/");//TODO: um yeah this string should be stored somewhere
+		ContextHandler projResCtx = new ContextHandler("/projectSpecific");//TODO: refactor this string to somewhere
+		projResCtx.setHandler(projectResourceHandler);
 		
 		HandlerCollection handlerCollection = new HandlerCollection();
 		handlerCollection.addHandler(servletHandler);
-		handlerCollection.addHandler(resourceHandler);
+		handlerCollection.addHandler(baseResourceHandler);
+		handlerCollection.addHandler(projResCtx);
 		
 		server.setHandler(handlerCollection);
 		

@@ -18,6 +18,7 @@ public abstract class Team1389RobotBase extends IterativeRobot {
 	private Mode mode;
 	
    	public abstract RobotCode getCode();
+   	public abstract WebServer getServer();
    	
     public void robotInit() {
     	robotCode = getCode();
@@ -26,7 +27,7 @@ public abstract class Team1389RobotBase extends IterativeRobot {
     	mode = Mode.DISABLED;
     	
     	//start webserver
-    	server = new WebServer(robotCode);
+    	server = getServer();
     	server.start();
     	
     	//configure Strongback

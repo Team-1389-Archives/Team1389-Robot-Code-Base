@@ -25,6 +25,11 @@ that automatically calls this one.-->
 	<property file="${user.home}/wpilib/java/${version}/ant/build.properties" />
 
 	<import file="${wpilib.ant.dir}/build.xml" />
+	
+	<target name="explain-purpose">
+		<echo>This repository, Team1389-Robot-Code-Base, is not meant to be deployed to a robot by itself. See the README for it's intended use.</echo>
+		<fail/>
+	</target>
 
 	<!--
 		This target is called by the build file in Team1389-Base-Project-Template.
@@ -58,5 +63,7 @@ that automatically calls this one.-->
 			<fileset dir="${build.dir}" includes="**/*.class" />
 		</jar>
 	</target>
+	
+	<target name="deploy" depends="explain-purpose"></target>
 
 </project>

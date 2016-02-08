@@ -8,8 +8,6 @@ import java.util.Map;
 import org.strongback.Strongback;
 import org.strongback.command.Command;
 
-import com.team1389.base.RobotLayoutType;
-
 public abstract class AutonomousBase{
 	Map<String, AutonMode> modes;
 

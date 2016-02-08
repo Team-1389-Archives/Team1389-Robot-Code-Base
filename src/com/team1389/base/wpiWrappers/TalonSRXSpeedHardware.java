@@ -5,11 +5,11 @@ import org.strongback.components.Motor;
 import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.CANTalon.TalonControlMode;
 
-public class SpeedTalonSRXHardware implements Motor{
+public class TalonSRXSpeedHardware implements Motor{
 	
 	CANTalon talon;
 	
-	public SpeedTalonSRXHardware(CANTalon talon) {
+	public TalonSRXSpeedHardware(CANTalon talon) {
 		this.talon = talon;
 		this.talon.changeControlMode(TalonControlMode.Speed);
 	}
@@ -29,5 +29,4 @@ public class SpeedTalonSRXHardware implements Motor{
 		talon.set(speed);
 		return this;
 	}
-
 }

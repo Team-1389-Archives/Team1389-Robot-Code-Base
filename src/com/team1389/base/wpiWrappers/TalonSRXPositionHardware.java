@@ -10,10 +10,11 @@ public class TalonSRXPositionHardware implements PositionController{
 	CANTalon wpiTalon;
 	double ticksPerDegree;
 	
-	public TalonSRXPositionHardware(CANTalon wpiTalon, double ticksPerDegree) {
+	public TalonSRXPositionHardware(CANTalon wpiTalon, double ticksPerDegree, boolean invert) {
 		this.wpiTalon = wpiTalon;
 		this.wpiTalon.changeControlMode(TalonControlMode.Position);
 		this.ticksPerDegree = ticksPerDegree;
+		this.wpiTalon.setInverted(invert);
 	}
 
 	@Override

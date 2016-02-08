@@ -7,9 +7,10 @@ public class TalonSRXSpeedFollower implements FollowerMotor{
 	
 	CANTalon talon;
 	
-	public TalonSRXSpeedFollower(CANTalon talon, int idToFollow) {
+	public TalonSRXSpeedFollower(CANTalon talon, int idToFollow, boolean isInverted) {
 		this.talon = talon;
 		this.talon.changeControlMode(TalonControlMode.Follower);
 		this.talon.set(idToFollow);
+		this.talon.setInverted(isInverted);
 	}
 }

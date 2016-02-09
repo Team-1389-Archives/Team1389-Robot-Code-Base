@@ -22,7 +22,7 @@ public class Simulator{
 			robotCode.getTeleopBase().start();
 			break;
 		case TEST:
-			//TODO: make test mode
+			robotCode.getTestBase().start();
 			break;
 		default:
 			break;

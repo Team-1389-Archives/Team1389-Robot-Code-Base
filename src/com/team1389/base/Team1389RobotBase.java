@@ -52,6 +52,7 @@ public abstract class Team1389RobotBase extends IterativeRobot {
     @Override
     public void testInit(){
     	mode = Mode.TEST;
+    	robotCode.getTestBase().start();
     }
     public void disabledInit(){
     	switch(mode){
@@ -75,17 +76,14 @@ public abstract class Team1389RobotBase extends IterativeRobot {
 	}
 
 	private void disabledTest() {
-    	//TODO cancel whatever command was running
+		robotCode.getTestBase().disable();
 	}
 
-	/*Each of these functions is called periodically in their respective modes.
-     * The scheduler needs to be run so that Commands which are scheduled will run.*/
     public void teleopPeriodic() {
     }
     public void autonomousPeriodic() {
     }
     public void testPeriodic() {
-//        LiveWindow.run();//TODO figure out what this is, should it happen in other modes?
     }
 	public void disabledPeriodic() {
 	}

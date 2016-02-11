@@ -1,0 +1,6 @@
+Library jars can be added to this folder.
+
+Notes about individual libraries:
+strongback.jar, strongback-testing.jar, strongback-sources.jar, and strongback-testing-sources.jar are from the Strongback library.
+https://strongback.gitbooks.io/using-strongback/content/index.html
+Strongback jars were last updated on 2016-01-27

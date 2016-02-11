@@ -1,0 +1,43 @@
+apply plugin: 'java'
+apply plugin: 'eclipse'
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+version = '0.1'
+group = "com.team1389"
+archivesBaseName = "Robot-Code-Base"
+
+jar {
+    manifest {
+        attributes 'Implementation-Title': 'Robot-Code-Base',
+                   'Implementation-Version': version
+    }
+}
+
+dependencies {
+	compile files('libs/gson-2.3.1.jar')
+    compile files('libs/javax.servlet-api-3.1.0.jar')
+    compile files('libs/jetty-http-9.3.2.jar')
+    compile files('libs/jetty-io-9.3.2.jar')
+    compile files('libs/jetty-security-9.3.2.jar')
+    compile files('libs/jetty-server-9.3.2.jar')
+    compile files('libs/jetty-servlet-9.3.2.jar')
+    compile files('libs/jetty-util-9.3.2.jar')
+    compile files('libs/strongback.jar')
+    compile files('libs/strongback-sources.jar')
+    compile files('libs/strongback-testing.jar')
+    compile files('libs/strongback-testing-sources.jar')
+    compile files('libs/WPILib.jar')
+}
+
+test {
+    systemProperties 'property': 'value'
+}
+
+uploadArchives {
+    repositories {
+       flatDir {
+           dirs 'repos'
+       }
+    }
+}

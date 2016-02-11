@@ -1,9 +1,0 @@
-Library jars can be added to this folder. They will automatically be found and included by the build.xml.
-
-To add a new jar to eclipse, right click on it -> build path -> Add to build path
-
-
-Notes about individual libraries:
-strongback.jar, strongback-testing.jar, strongback-sources.jar, and strongback-testing-sources.jar are from the Strongback library.
-https://strongback.gitbooks.io/using-strongback/content/index.html
-Strongback jars were last updated on 2016-01-27

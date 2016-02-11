@@ -4,6 +4,7 @@ package com.team1389.base;
 import com.team1389.base.webserver.WebServer;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 
 /*
  * This class is the base of all of the code. Everything else is called from here.
@@ -32,6 +33,8 @@ public abstract class Team1389RobotBase extends IterativeRobot {
     	
     	//configure Strongback
     	Configuration.configureStrongback();
+
+    	LiveWindow.setEnabled(false);
     }
     
     @Override
@@ -79,12 +82,16 @@ public abstract class Team1389RobotBase extends IterativeRobot {
 		robotCode.getTestBase().disable();
 	}
 
+	@Override
     public void teleopPeriodic() {
     }
+	@Override
     public void autonomousPeriodic() {
     }
+	@Override
     public void testPeriodic() {
     }
+	@Override
 	public void disabledPeriodic() {
 	}
 }

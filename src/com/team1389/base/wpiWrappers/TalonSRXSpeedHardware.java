@@ -29,4 +29,12 @@ public class TalonSRXSpeedHardware implements Motor{
 		talon.set(speed);
 		return this;
 	}
+	
+	public int getEncoderSpeed(){
+		return talon.getEncVelocity();
+	}
+	
+	public int getEncoderPosition(){
+		return talon.getEncPosition();
+	}
 }

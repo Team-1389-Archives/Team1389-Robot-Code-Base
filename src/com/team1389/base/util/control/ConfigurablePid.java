@@ -6,17 +6,18 @@ import com.team1389.base.util.StringSerializer;
 
 public class ConfigurablePid extends ConfigurableConstant<ConfigurablePid.PIDConstants>{
 	public static class PIDConstants{
-		double p;
-		double i;
-		double d;
-		public PIDConstants(double p, double i, double d) {
+		public final double p;
+		public final double i;
+		public final double d;
+		public final double kv;
+		public final double ka;
+		public PIDConstants(double p, double i, double d, double kv, double ka) {
 			this.p = p;
 			this.i = i;
 			this.d = d;
+			this.kv = kv;
+			this.ka = ka;
 		}
-		public double getP(){return p;}
-		public double getI(){return p;}
-		public double getD(){return p;}
 	}
 
 	public static class PIDConstantsSerializer implements StringSerializer<PIDConstants>{

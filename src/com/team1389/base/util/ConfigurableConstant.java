@@ -17,6 +17,7 @@ public class ConfigurableConstant<T>{
 	public ConfigurableConstant(String name, T defaultVal, StringSerializer<T> serializer){
 		this.name = name;
 		this.serializer = serializer;
+		System.out.println("setting...");
 		if (!isSet()){
 			set(defaultVal);
 		}

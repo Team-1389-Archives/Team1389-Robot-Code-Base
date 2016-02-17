@@ -54,10 +54,10 @@ public class ConstantAccellerationMotionProfile extends MotionProfile{
 			duration = 2 * Math.sqrt(distance / maxAcc);
 			double maxActualVel = (maxAcc * duration) / 2;
 			double halfTime = duration / 2;
-			double positionAtHalfTime = .5 * maxActualVel * halfTime * halfTime;
+			double positionAtHalfTime = .5 * maxAcc * halfTime * halfTime;
 			position = (t) -> {
 				if (t <= halfTime){
-					return .5 * maxActualVel * t * t;
+					return .5 * maxAcc * t * t;
 				} else {
 					double timeSince = t - halfTime;
 					return positionAtHalfTime + timeSince * maxActualVel  - .5 * maxAcc * timeSince * timeSince;

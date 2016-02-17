@@ -37,6 +37,8 @@ public abstract class AutonomousBase{
 		return new ArrayList<AutonMode>(modes.values());
 	}
 	public void autonStart(){
+		setup();
+		
 		runningAutonMode = modes.get(selectedAutonName);
 		runningCommand = runningAutonMode.getCommand();
 		Strongback.restart();
@@ -49,4 +51,5 @@ public abstract class AutonomousBase{
 	}
 
 	protected abstract List<AutonMode> provideAutonModes();
+	protected abstract void setup();
 }

@@ -43,7 +43,6 @@ public class CANTalonFollowProfileCommand extends Command{
 		
 		TrajectoryPoint point = new TrajectoryPoint();
 		for (int millis = 0; millis < durationInMillis; millis += 1){
-			//TODO: so this is where it makes the point and sends to talon
 		}
 	}
 

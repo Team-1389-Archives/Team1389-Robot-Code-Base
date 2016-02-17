@@ -5,6 +5,7 @@ public class ConstantAccellerationMotionProfile extends MotionProfile{
 		double run(double in);
 	}
 	
+	DoubleFunction position;
 	DoubleFunction velocity;
 	DoubleFunction acceleration;
 	double duration;
@@ -18,6 +19,19 @@ public class ConstantAccellerationMotionProfile extends MotionProfile{
 			double rampTime = maxVel / maxAcc;
 			duration = (distance / maxVel) + (maxVel / maxAcc);
 			double rampDownStartTime = duration - rampTime;
+			
+			double positionAtRampTime = .5 * maxAcc * rampTime * rampTime;
+			double positionAtRampStartTime = positionAtRampTime + maxVel * (rampDownStartTime - rampTime);
+			position = (t) -> {
+				if (t <= rampTime){
+					return .5 * maxAcc * t * t;
+				} else if (t <= rampDownStartTime) {
+					return positionAtRampTime + maxVel * (t - rampTime);
+				} else {
+					double timeSince = t - rampDownStartTime;
+					return positionAtRampStartTime + timeSince * maxVel - 0.5 * maxAcc * timeSince * timeSince;
+				}
+			};
 			velocity = (t) -> {
 				if (t <= rampTime){
 					return t * maxAcc;
@@ -40,6 +54,16 @@ public class ConstantAccellerationMotionProfile extends MotionProfile{
 			duration = 2 * Math.sqrt(distance / maxAcc);
 			double maxActualVel = (maxAcc * duration) / 2;
 			double halfTime = duration / 2;
+			double positionAtHalfTime = .5 * maxActualVel * halfTime * halfTime;
+			position = (t) -> {
+				if (t <= halfTime){
+					return .5 * maxActualVel * t * t;
+				} else {
+					double timeSince = t - halfTime;
+					return positionAtHalfTime + timeSince * maxActualVel  - .5 * maxAcc * timeSince * timeSince;
+				}
+			};
+			
 			velocity = (t) -> {
 				if (t <= halfTime){
 					return t * maxAcc;
@@ -70,25 +94,31 @@ public class ConstantAccellerationMotionProfile extends MotionProfile{
 	
 	public static void main(String[] args){
 		MotionProfile profile = 
-				new ConstantAccellerationMotionProfile(1, 10, 1);
+				new ConstantAccellerationMotionProfile(10, 3, 1);
 		
 		System.out.println("duration: " + profile.getDuration());
 		
-		System.out.println(profile.getVelocity(0));
-		System.out.println(profile.getVelocity(1));
-		System.out.println(profile.getVelocity(2));
-		System.out.println(profile.getVelocity(3));
-		System.out.println(profile.getVelocity(4));
-		System.out.println(profile.getVelocity(5));
-		System.out.println(profile.getVelocity(6));
-		System.out.println(profile.getVelocity(7));
-		System.out.println(profile.getVelocity(8));
-		System.out.println(profile.getVelocity(9));
+		System.out.println(profile.getPosition(0));
+		System.out.println(profile.getPosition(1));
+		System.out.println(profile.getPosition(2));
+		System.out.println(profile.getPosition(3));
+		System.out.println(profile.getPosition(4));
+		System.out.println(profile.getPosition(5));
+		System.out.println(profile.getPosition(6));
+		System.out.println(profile.getPosition(7));
+		System.out.println(profile.getPosition(8));
+		System.out.println(profile.getPosition(9));
+		System.out.println(profile.getPosition(10));
 	}
 
 	@Override
 	public double provideAcceleration(double time) {
 		return acceleration.run(time);
+	}
+
+	@Override
+	public double providePosition(double time) {
+		return position.run(time);
 	}
 
 }

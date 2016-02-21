@@ -22,6 +22,11 @@ public class CANTalonFollowProfileCommand extends Command{
 		previousControlMode = talon.getControlMode();
 		timer = new Timer();
 	}
+	
+	@Override
+	public void initialize() {
+		sendTrajectory(talon, profile, pidConstants);
+	}
 
 	@Override
 	public boolean execute() {
@@ -43,6 +48,13 @@ public class CANTalonFollowProfileCommand extends Command{
 		
 		TrajectoryPoint point = new TrajectoryPoint();
 		for (int millis = 0; millis < durationInMillis; millis += 1){
+			double seconds = millis * 0.001;
+			if (millis == 0){
+				point.zeroPos = true;
+			} else {
+				point.zeroPos = false;
+			}
+//			point.position = 
 		}
 	}
 

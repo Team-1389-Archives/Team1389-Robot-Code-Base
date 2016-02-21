@@ -1,5 +1,7 @@
 package com.team1389.base.wpiWrappers;
 
+import com.team1389.base.util.control.ConfigurablePid.PIDConstants;
+
 import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.CANTalon.TalonControlMode;
 
@@ -8,30 +10,51 @@ import edu.wpi.first.wpilibj.CANTalon.TalonControlMode;
  */
 public class TalonSRXPositionHardware implements PositionController{
 	CANTalon wpiTalon;
-	double ticksPerDegree;
+	double ticksPerRotation;
+	double offset;
 	
-	public TalonSRXPositionHardware(CANTalon wpiTalon, double ticksPerDegree, boolean invert) {
+	public TalonSRXPositionHardware(CANTalon wpiTalon, double ticksPerRotation) {
 		this.wpiTalon = wpiTalon;
-		this.wpiTalon.changeControlMode(TalonControlMode.Position);
-		this.ticksPerDegree = ticksPerDegree;
-		this.wpiTalon.setInverted(invert);
+		this.ticksPerRotation = ticksPerRotation;
+		this.offset = 0;
 	}
 
 	@Override
 	public void setPosition(double position) {
-		double hardwarePosition = position * ticksPerDegree;
+		this.wpiTalon.changeControlMode(TalonControlMode.Position);
+		double hardwarePosition = (position + offset) * ticksPerRotation;
 		wpiTalon.set(hardwarePosition);
 	}
 
 	@Override
 	public double getPosition() {
-		double hardwarePosition = wpiTalon.getPosition();
-		return hardwarePosition / ticksPerDegree;
+		return getScaledPos();
+	}
+
+	private double getScaledPos() {
+		return wpiTalon.getPosition() / ticksPerRotation - offset;
 	}
 
 	@Override
-	public void setPID(double p, double i, double d) {
-		wpiTalon.setPID(p, i, d);
+	public void setPID(PIDConstants pidC) {
+		wpiTalon.setProfile(0);//sets which pid gains to use
+		wpiTalon.setP(pidC.p);
+		wpiTalon.setI(pidC.i);
+		wpiTalon.setD(pidC.d);
+		wpiTalon.setF(pidC.kv);
 	}
 
+	@Override
+	public void setCurrentPositionAs(double as) {
+		offset = getScaledPos() - as;
+	}
+	
+	public CANTalon getTalon(){
+		return wpiTalon;
+	}
+	
+	public void disable(){
+		wpiTalon.changeControlMode(TalonControlMode.PercentVbus);
+		wpiTalon.set(0);
+	}
 }

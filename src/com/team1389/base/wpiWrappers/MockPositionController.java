@@ -1,5 +1,7 @@
 package com.team1389.base.wpiWrappers;
 
+import com.team1389.base.util.control.ConfigurablePid.PIDConstants;
+
 public class MockPositionController implements PositionController{
 	double position;
 	
@@ -18,8 +20,14 @@ public class MockPositionController implements PositionController{
 	}
 
 	@Override
-	public void setPID(double p, double i, double d) {
+	public void setPID(PIDConstants pidC) {
 		//no op
+	}
+
+	@Override
+	public void setCurrentPositionAs(double as) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

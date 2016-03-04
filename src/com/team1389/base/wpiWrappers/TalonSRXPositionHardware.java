@@ -3,6 +3,8 @@ package com.team1389.base.wpiWrappers;
 import com.team1389.base.util.control.ConfigurablePid.PIDConstants;
 
 import edu.wpi.first.wpilibj.CANTalon;
+import edu.wpi.first.wpilibj.CANTalon.FeedbackDevice;
+import edu.wpi.first.wpilibj.CANTalon.FeedbackDeviceStatus;
 import edu.wpi.first.wpilibj.CANTalon.TalonControlMode;
 
 /**
@@ -23,7 +25,12 @@ public class TalonSRXPositionHardware implements PositionController{
 	public void setPosition(double position) {
 		this.wpiTalon.changeControlMode(TalonControlMode.Position);
 		double hardwarePosition = (position + offset) * ticksPerRotation;
-		wpiTalon.set(hardwarePosition);
+		if (wpiTalon.isSensorPresent(FeedbackDevice.PulseWidth).equals(FeedbackDeviceStatus.FeedbackStatusPresent)){
+			wpiTalon.set(hardwarePosition);
+		} else {
+			System.out.println("encoder disconnected, current value is " + wpiTalon.getPosition());
+			disable();
+		}
 	}
 
 	@Override

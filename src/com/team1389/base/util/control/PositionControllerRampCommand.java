@@ -14,6 +14,7 @@ public class PositionControllerRampCommand extends Command{
 	public interface SetpointProvider{
 		public double getSetpoint();
 		public default void init(){}
+		public default boolean isFinished(){return false;}
 	}
 	
 	
@@ -38,7 +39,7 @@ public class PositionControllerRampCommand extends Command{
 	}
 	
 	public PositionControllerRampCommand(TalonSRXPositionHardware controller, SetpointProvider provider, PIDConstants pidC) {
-		this(controller, provider, pidC, Double.MAX_VALUE, Double.MIN_VALUE, Double.MAX_VALUE);
+		this(controller, provider, pidC, Double.MAX_VALUE, -Double.MAX_VALUE, Double.MAX_VALUE);
 		//just looking at this constructor makes me cringe... its so hacked
 	}
 	
@@ -68,7 +69,7 @@ public class PositionControllerRampCommand extends Command{
 		controller.setPosition(setpoint);
 	
 		timer.zero();
-		return false;
+		return setpointProvider.isFinished();
 	}
 	
 	private double getNextSetpoint(double goalPoint, double timeDiff){

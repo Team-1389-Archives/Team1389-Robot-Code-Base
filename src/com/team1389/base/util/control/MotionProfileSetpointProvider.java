@@ -22,5 +22,10 @@ public class MotionProfileSetpointProvider implements SetpointProvider{
 	public void init() {
 		timer.zero();
 	}
+	
+	@Override
+	public boolean isFinished() {
+		return timer.get() >= profile.getDuration();
+	}
 
 }

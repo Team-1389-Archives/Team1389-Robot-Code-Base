@@ -35,7 +35,6 @@ public class SimultaneousCommand extends Command{
 				iter.remove();
 			}
 		}
-		
 		return commands.isEmpty();
 	}
 	

@@ -14,4 +14,5 @@ public interface PositionController extends Requirable{
 	void setCurrentPositionAs(double as);
 	double getPosition();
 	void setPID(PIDConstants constants);
+	void disable();
 }

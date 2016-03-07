@@ -30,4 +30,10 @@ public class MockPositionController implements PositionController{
 		
 	}
 
+	@Override
+	public void disable() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

@@ -12,7 +12,14 @@ public class ConstantAccellerationMotionProfile extends MotionProfile{
 	
 	
 	//black magic: do not touch
-	public ConstantAccellerationMotionProfile(double distance, double maxVel, double maxAcc) {
+	public ConstantAccellerationMotionProfile(double rawDistance, double maxVel, double maxAcc) {
+		double distance = Math.abs(rawDistance);
+		double multiplyer;
+		if (distance < 0){
+			multiplyer = -1;
+		} else {
+			multiplyer = 1;
+		}
 		double rampDist = maxVel * maxVel / (2 * maxAcc);
 		
 		if (2 * rampDist <= distance){//trapezoidal motion profile function
@@ -23,32 +30,38 @@ public class ConstantAccellerationMotionProfile extends MotionProfile{
 			double positionAtRampTime = .5 * maxAcc * rampTime * rampTime;
 			double positionAtRampStartTime = positionAtRampTime + maxVel * (rampDownStartTime - rampTime);
 			position = (t) -> {
+				double position;
 				if (t <= rampTime){
-					return .5 * maxAcc * t * t;
+					position = .5 * maxAcc * t * t;
 				} else if (t <= rampDownStartTime) {
-					return positionAtRampTime + maxVel * (t - rampTime);
+					position = positionAtRampTime + maxVel * (t - rampTime);
 				} else {
 					double timeSince = t - rampDownStartTime;
-					return positionAtRampStartTime + timeSince * maxVel - 0.5 * maxAcc * timeSince * timeSince;
+					position = positionAtRampStartTime + timeSince * maxVel - 0.5 * maxAcc * timeSince * timeSince;
 				}
+				return multiplyer * position;
 			};
 			velocity = (t) -> {
+				double velocity;
 				if (t <= rampTime){
-					return t * maxAcc;
+					velocity = t * maxAcc;
 				} else if (t <= rampDownStartTime){
-					return maxVel;
+					velocity = maxVel;
 				} else {
-					return maxVel - (maxAcc * (t - rampDownStartTime));
+					velocity = maxVel - (maxAcc * (t - rampDownStartTime));
 				}
+				return velocity * multiplyer;
 			};
 			acceleration = (t) -> {
+				double acceleration;
 				if (t <= rampTime){
-					return maxAcc;
+					acceleration = maxAcc;
 				} else if (t <= rampDownStartTime){
-					return 0;
+					acceleration = 0;
 				} else {
-					return -maxAcc;
+					acceleration = -maxAcc;
 				}
+				return acceleration * multiplyer;
 			};
 		} else {//triangular motion profile function
 			duration = 2 * Math.sqrt(distance / maxAcc);
@@ -56,28 +69,34 @@ public class ConstantAccellerationMotionProfile extends MotionProfile{
 			double halfTime = duration / 2;
 			double positionAtHalfTime = .5 * maxAcc * halfTime * halfTime;
 			position = (t) -> {
+				double position;
 				if (t <= halfTime){
-					return .5 * maxAcc * t * t;
+					position = .5 * maxAcc * t * t;
 				} else {
 					double timeSince = t - halfTime;
-					return positionAtHalfTime + timeSince * maxActualVel  - .5 * maxAcc * timeSince * timeSince;
+					position = positionAtHalfTime + timeSince * maxActualVel  - .5 * maxAcc * timeSince * timeSince;
 				}
+				return position * multiplyer;
 			};
 			
 			velocity = (t) -> {
+				double velocity;
 				if (t <= halfTime){
-					return t * maxAcc;
+					velocity = t * maxAcc;
 				} else {
-					return maxActualVel - (maxAcc * (t - halfTime));
+					velocity = maxActualVel - (maxAcc * (t - halfTime));
 				}
+				return velocity * multiplyer;
 			};
 			
 			acceleration = (t) -> {
+				double acceleration;
 				if (t <= halfTime){
-					return maxAcc;
+					acceleration = maxAcc;
 				} else {
-					return -maxAcc;
+					acceleration = -maxAcc;
 				}
+				return acceleration * multiplyer;
 			};
 		}
 	}
@@ -94,7 +113,7 @@ public class ConstantAccellerationMotionProfile extends MotionProfile{
 	
 	public static void main(String[] args){
 		MotionProfile profile = 
-				new ConstantAccellerationMotionProfile(10, 3, 1);
+				new ConstantAccellerationMotionProfile(-10, 3, 1);
 		
 		System.out.println("duration: " + profile.getDuration());
 		

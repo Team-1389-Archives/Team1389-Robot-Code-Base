@@ -2,13 +2,13 @@ package com.team1389.base.util.control;
 
 import org.strongback.command.Command;
 
-import com.team1389.base.wpiWrappers.TalonSRXPositionHardware;
+import com.team1389.base.wpiWrappers.PositionController;
 
 public class PositionControllerControlCommand extends Command{
 	SetpointProvider setpointProvider;
-	TalonSRXPositionHardware controller;
+	PositionController controller;
 	
-	public PositionControllerControlCommand(SetpointProvider setpointProvider, TalonSRXPositionHardware controller) {
+	public PositionControllerControlCommand(SetpointProvider setpointProvider, PositionController controller) {
 		this.setpointProvider = setpointProvider;
 		this.controller = controller;
 	}

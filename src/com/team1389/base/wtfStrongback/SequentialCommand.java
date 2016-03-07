@@ -14,16 +14,22 @@ import org.strongback.command.Command;
  */
 public class SequentialCommand extends Command{
 	
+	Command[] startCommands;
 	Stack<Command> commands;
 	Command current;
 	
 	public SequentialCommand(Command...commands) {
+		this.startCommands = commands;
+	}
+	
+	@Override
+	public void initialize() {
 		this.commands = new Stack<Command>();
-		for (int i = commands.length - 1; i >= 0; i -= 1){
-			if (commands[i] == null){
+		for (int i = startCommands.length - 1; i >= 0; i -= 1){
+			if (startCommands[i] == null){
 				throw new IllegalArgumentException("argument to SequentialCommand can't be null");
 			}
-			this.commands.push(commands[i]);
+			this.commands.push(startCommands[i]);
 		}
 		nextCommand();
 	}

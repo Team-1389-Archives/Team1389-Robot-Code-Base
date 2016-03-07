@@ -12,14 +12,16 @@ import org.strongback.command.Command;
 //I JUST WANT TO PLAY LEAGUE
 public class SimultaneousCommand extends Command{
 	
+	Command[] startCommands;
 	List<Command> commands;
 	
 	public SimultaneousCommand(Command... commands) {
-		this.commands = new ArrayList<Command>(Arrays.asList(commands));
+		this.startCommands = commands;
 	}
 	
 	@Override
 	public void initialize() {
+		this.commands = new ArrayList<Command>(Arrays.asList(startCommands));
 		for (Command c: commands){
 			c.initialize();
 		}

@@ -15,7 +15,7 @@ public class ConstantAccellerationMotionProfile extends MotionProfile{
 	public ConstantAccellerationMotionProfile(double rawDistance, double maxVel, double maxAcc) {
 		double distance = Math.abs(rawDistance);
 		double multiplyer;
-		if (distance < 0){
+		if (rawDistance < 0){
 			multiplyer = -1;
 		} else {
 			multiplyer = 1;

@@ -58,6 +58,9 @@ public class TalonSRXPositionHardware implements PositionController{
 		wpiTalon.set(0);
 	}
 	
+	/**
+	 * TODO: delete this eventually 
+	 */
 	public CANTalon getTalon(){
 		return wpiTalon;
 	}

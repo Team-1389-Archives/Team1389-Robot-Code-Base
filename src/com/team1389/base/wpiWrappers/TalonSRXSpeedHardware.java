@@ -1,40 +1,40 @@
 package com.team1389.base.wpiWrappers;
 
-import org.strongback.components.Motor;
+import com.team1389.base.util.control.ConfigurablePid.PIDConstants;
 
 import edu.wpi.first.wpilibj.CANTalon;
+import edu.wpi.first.wpilibj.CANTalon.FeedbackDevice;
+import edu.wpi.first.wpilibj.CANTalon.FeedbackDeviceStatus;
 import edu.wpi.first.wpilibj.CANTalon.TalonControlMode;
 
-public class TalonSRXSpeedHardware implements Motor{
+public class TalonSRXSpeedHardware{
+	CANTalon wpiTalon;
 	
-	CANTalon talon;
-	
-	public TalonSRXSpeedHardware(CANTalon talon) {
-		this.talon = talon;
-		this.talon.changeControlMode(TalonControlMode.Speed);
+	public TalonSRXSpeedHardware(CANTalon wpiTalon) {
+		this.wpiTalon = wpiTalon;
 	}
 
-	@Override
-	public void stop() {
-		talon.setSetpoint(0.0);
+	public void setSpeed(double speed) {
+		this.wpiTalon.changeControlMode(TalonControlMode.Speed);
+		if (wpiTalon.isSensorPresent(FeedbackDevice.PulseWidth).equals(FeedbackDeviceStatus.FeedbackStatusPresent)){
+			wpiTalon.set(speed);
+		} else {
+			System.out.println("speed encoder disconnected, current value is " + wpiTalon.getPosition());
+			disable();
+		}
 	}
 
-	@Override
-	public double getSpeed() {
-		return talon.get();
+	public void setPID(PIDConstants pidC) {
+		wpiTalon.setProfile(0);//sets which pid gains to use
+		wpiTalon.setP(pidC.p);
+		wpiTalon.setI(pidC.i);
+		wpiTalon.setD(pidC.d);
+		wpiTalon.setF(pidC.kv);
 	}
 
-	@Override
-	public Motor setSpeed(double speed) {
-		talon.set(speed);
-		return this;
+	public void disable(){
+		wpiTalon.changeControlMode(TalonControlMode.PercentVbus);
+		wpiTalon.set(0);
 	}
 	
-	public int getEncoderSpeed(){
-		return talon.getEncVelocity();
-	}
-	
-	public int getEncoderPosition(){
-		return talon.getEncPosition();
-	}
 }

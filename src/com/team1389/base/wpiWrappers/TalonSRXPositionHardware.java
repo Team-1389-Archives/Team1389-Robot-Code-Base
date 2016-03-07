@@ -52,13 +52,10 @@ public class TalonSRXPositionHardware implements PositionController{
 
 	@Override
 	public void setCurrentPositionAs(double as) {
-		//THIS IS PROBABLY WHERE THE GLITCH IS, NEED TO REASON THROUGH THIS
-		//PROBABLY NEED TO TELL TALON TO SET ANGLE OR SOMETHING
-		//NO NEED TO SET SETPOINT
-//		offset = getScaledPos() - as;
 		offset = - as;
 		wpiTalon.changeControlMode(TalonControlMode.Position);
 		wpiTalon.setPosition(0);
+		wpiTalon.set(0);
 	}
 	
 	public CANTalon getTalon(){
@@ -69,4 +66,5 @@ public class TalonSRXPositionHardware implements PositionController{
 		wpiTalon.changeControlMode(TalonControlMode.PercentVbus);
 		wpiTalon.set(0);
 	}
+	
 }

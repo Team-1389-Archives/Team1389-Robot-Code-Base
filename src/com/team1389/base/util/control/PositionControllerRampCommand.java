@@ -45,7 +45,6 @@ public class PositionControllerRampCommand extends Command{
 	
 	@Override
 	public void initialize() {
-		timer.zero();
 		CANTalon talon = controller.getTalon();
 
 		talon.configNominalOutputVoltage(0, 0);
@@ -55,9 +54,10 @@ public class PositionControllerRampCommand extends Command{
 		
 		controller.setCurrentPositionAs(0);
 		setpoint = controller.getPosition();
-		controller.setPosition(setpoint);
 		
 		setpointProvider.init();
+
+		timer.zero();
 	}
 
 	@Override

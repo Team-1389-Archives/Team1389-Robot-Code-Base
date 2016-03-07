@@ -92,5 +92,15 @@ public class PositionControllerRampCommand extends Command{
 		
 		return newSetpoint;
 	}
+	
+	@Override
+	public void end() {
+		controller.disable();
+	}
+	
+	@Override
+	public void interrupted() {
+		end();
+	}
 
 }

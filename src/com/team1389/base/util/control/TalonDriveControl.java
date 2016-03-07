@@ -4,21 +4,21 @@ import org.strongback.command.Command;
 
 import com.team1389.base.util.CommandsUtil;
 import com.team1389.base.util.control.ConfigurablePid.PIDConstants;
-import com.team1389.base.util.control.PositionControllerRampCommand.SetpointProvider;
 import com.team1389.base.wpiWrappers.TalonSRXPositionHardware;
 
 public class TalonDriveControl{
 	TalonSRXPositionHardware left, right;
 	double maxVel, maxAcc, turnMod;
-	PIDConstants pid;
 	
 	public TalonDriveControl(TalonSRXPositionHardware left, TalonSRXPositionHardware right, double maxVel, double maxAcc, double wheelTurnsPerRotation, PIDConstants pid) {
 		this.left = left;
 		this.right = right;
 		this.maxVel = maxVel;
 		this.maxAcc = maxAcc;
-		this.pid = pid;
 		this.turnMod = wheelTurnsPerRotation;
+		
+		left.setPID(pid);
+		right.setPID(pid);
 	}
 	
 	public Command driveDistanceCommand(double distance){
@@ -26,8 +26,8 @@ public class TalonDriveControl{
 
 		SetpointProvider provider = new MotionProfileSetpointProvider(profile);
 
-		Command leftCommand = new PositionControllerRampCommand(left, provider, pid);
-		Command rightCommand = new PositionControllerRampCommand(right, provider, pid);
+		Command leftCommand = new PositionControllerControlCommand(provider, left);
+		Command rightCommand = new PositionControllerControlCommand(provider, right);
 		
 		return CommandsUtil.combineSimultaneous(leftCommand, rightCommand);
 	}
@@ -39,8 +39,8 @@ public class TalonDriveControl{
 		SetpointProvider leftProvider = new MotionProfileSetpointProvider(leftProfile);
 		SetpointProvider rightProvider = new MotionProfileSetpointProvider(rightProfile);
 
-		Command leftCommand = new PositionControllerRampCommand(left, leftProvider, pid);
-		Command rightCommand = new PositionControllerRampCommand(right, rightProvider, pid);
+		Command leftCommand = new PositionControllerControlCommand(leftProvider, left);
+		Command rightCommand = new PositionControllerControlCommand(rightProvider, right);
 		
 		return CommandsUtil.combineSimultaneous(leftCommand, rightCommand);
 	}

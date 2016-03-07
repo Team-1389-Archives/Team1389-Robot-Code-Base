@@ -1,7 +1,6 @@
 package com.team1389.base.util.control;
 
 import com.team1389.base.util.Timer;
-import com.team1389.base.util.control.PositionControllerRampCommand.SetpointProvider;
 
 public class ConstantSpeedSetpointProvider implements SetpointProvider{
 	

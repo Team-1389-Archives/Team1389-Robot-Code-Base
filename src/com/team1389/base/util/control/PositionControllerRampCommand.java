@@ -10,14 +10,6 @@ import com.team1389.base.wpiWrappers.TalonSRXPositionHardware;
 import edu.wpi.first.wpilibj.CANTalon;
 
 public class PositionControllerRampCommand extends Command{
-	@FunctionalInterface
-	public interface SetpointProvider{
-		public double getSetpoint();
-		public default void init(){}
-		public default boolean isFinished(){return false;}
-	}
-	
-	
 	TalonSRXPositionHardware controller;
 	SetpointProvider setpointProvider;
 	double maxPos, minPos, maxChange;

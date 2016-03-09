@@ -8,9 +8,13 @@ import com.team1389.base.util.Timer;
 import com.team1389.base.util.control.ConfigurablePid.PIDConstants;
 import com.team1389.base.wpiWrappers.TalonSRXPositionHardware;
 
+import edu.wpi.first.wpilibj.CANTalon;
+import edu.wpi.first.wpilibj.TalonSRX;
+
 public class TalonDriveControl{
 	TalonSRXPositionHardware left, right;
 	double maxVel, maxAcc, turnMod;
+	PIDConstants pid;
 	
 	public TalonDriveControl(TalonSRXPositionHardware left, TalonSRXPositionHardware right, double maxVel, double maxAcc, double wheelTurnsPerRotation, PIDConstants pid) {
 		this.left = left;
@@ -18,6 +22,7 @@ public class TalonDriveControl{
 		this.maxVel = maxVel;
 		this.maxAcc = maxAcc;
 		this.turnMod = wheelTurnsPerRotation;
+		this.pid = pid;
 		
 		left.setPID(pid);
 		right.setPID(pid);
@@ -58,6 +63,29 @@ public class TalonDriveControl{
 		return CommandsUtil.combineSimultaneous(driveControl, leftCommand, rightCommand);
 	}
 	
+	class SetPid extends Command{
+		TalonSRXPositionHardware left, right;
+		PIDConstants pid;
+		
+		public SetPid(TalonSRXPositionHardware left, TalonSRXPositionHardware right, PIDConstants pid) {
+			this.left = left;
+			this.right = right;
+			this.pid = pid;
+		}
+		
+		@Override
+		public void initialize() {
+			left.setPID(pid);
+			right.setPID(pid);
+		}
+
+		@Override
+		public boolean execute() {
+			return true;
+		}
+		
+	}
+	
 	class DriveControl extends Command{
 		
 		double leftPos, rightPos;
@@ -88,7 +116,7 @@ public class TalonDriveControl{
 		
 		@Override
 		public boolean execute() {
-			double x = joystick.getAxis(0).read();
+			double x = joystick.getAxis(0).read() * .65;
 			double y = -joystick.getAxis(1).read();
 			
 			double maxSpeed = speed * timer.get();

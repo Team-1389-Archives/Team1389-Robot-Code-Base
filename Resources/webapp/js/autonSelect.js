@@ -33,7 +33,7 @@ function drawSelected(autonName){
 
 function makeAutonElement(modeData){
 	var button = document.createElement("button");
-	button.innerText = modeData.autonName;
+	button.innerHTML = modeData.autonName;
 	button.className += "autonButton";
 	button.onclick = function(){
 		console.log("sending " + JSON.stringify({name: modeData.autonName}));
@@ -57,7 +57,7 @@ httpGetAsync("/servlet/autonModes", function(data){
 	
 	autonDivList.forEach(function(element){
 		listDiv.appendChild(element);
-		nameElementMap[element.innerText] = element;
+		nameElementMap[element.innerHTML] = element;
 	});
 	
 	drawSelected(autonModesData.selectedAuton);

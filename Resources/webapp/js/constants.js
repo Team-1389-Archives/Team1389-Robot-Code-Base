@@ -32,7 +32,7 @@ function makeConstantElement(name, value){
 	input.hidden = true;
 	
 	//create editing ability
-	editSubmitButton.innerText = "Edit";
+	editSubmitButton.innerHTML = "Edit";
 	var buttonMode = "Edit";
 	editSubmitButton.addEventListener("click", function(){
 	    if (buttonMode === "Edit") {
@@ -52,11 +52,11 @@ function makeConstantElement(name, value){
 	                    makePage();
 	                });
 	    }
-	    editSubmitButton.innerText = buttonMode;
+	    editSubmitButton.innerHTML = buttonMode;
 	});
 	
-	nameP.innerText = name;
-	valueP.innerText = value;
+	nameP.innerHTML = name;
+	valueP.innerHTML = value;
 	
 	div.appendChild(nameP);
 	div.appendChild(valueP);

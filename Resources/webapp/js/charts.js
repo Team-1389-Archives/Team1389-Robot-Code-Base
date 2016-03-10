@@ -65,7 +65,7 @@ function makeChart(name, dataObj){
     downloadButton.addEventListener("click", function(){
        download(name + ".csv", dataToCsv(dataObj));
     });
-    downloadButton.innerText = "Download Chart";
+    downloadButton.innerHTML = "Download Chart";
     
     var myNewChart = new Chart(ctx).Scatter(data);
     

@@ -15,6 +15,7 @@ public class TalonDriveControl{
 	TalonSRXPositionHardware left, right;
 	double maxVel, maxAcc, turnMod;
 	PIDConstants pid;
+	Command configTalons;
 	
 	public TalonDriveControl(TalonSRXPositionHardware left, TalonSRXPositionHardware right, double maxVel, double maxAcc, double wheelTurnsPerRotation, PIDConstants pid) {
 		this.left = left;
@@ -23,9 +24,7 @@ public class TalonDriveControl{
 		this.maxAcc = maxAcc;
 		this.turnMod = wheelTurnsPerRotation;
 		this.pid = pid;
-		
-		left.setPID(pid);
-		right.setPID(pid);
+		configTalons = new SetPid(left, right, pid);
 	}
 	
 	public Command driveDistanceCommand(double distance){
@@ -36,7 +35,8 @@ public class TalonDriveControl{
 		Command leftCommand = new PositionControllerControlCommand(provider, left);
 		Command rightCommand = new PositionControllerControlCommand(provider, right);
 		
-		return CommandsUtil.combineSimultaneous(leftCommand, rightCommand);
+		Command all = CommandsUtil.combineSimultaneous(leftCommand, rightCommand);
+		return CommandsUtil.combineSequential(configTalons, all);
 	}
 	
 	public Command turnAmount(double rotations){
@@ -49,7 +49,8 @@ public class TalonDriveControl{
 		Command leftCommand = new PositionControllerControlCommand(leftProvider, left);
 		Command rightCommand = new PositionControllerControlCommand(rightProvider, right);
 		
-		return CommandsUtil.combineSimultaneous(leftCommand, rightCommand);
+		Command all = CommandsUtil.combineSimultaneous(leftCommand, rightCommand);
+		return CommandsUtil.combineSequential(configTalons, all);
 	}
 	
 	public Command teleopControl(InputDevice joystick, double maxSpeed){
@@ -60,7 +61,8 @@ public class TalonDriveControl{
 		Command rightCommand = new PositionControllerControlCommand(rightProvider, right);
 		Command driveControl = new DriveControl(leftProvider, rightProvider, joystick, maxSpeed);
 		
-		return CommandsUtil.combineSimultaneous(driveControl, leftCommand, rightCommand);
+		Command all = CommandsUtil.combineSimultaneous(driveControl, leftCommand, rightCommand);
+		return CommandsUtil.combineSequential(configTalons, all);
 	}
 	
 	class SetPid extends Command{
@@ -116,8 +118,11 @@ public class TalonDriveControl{
 		
 		@Override
 		public boolean execute() {
-			double x = joystick.getAxis(0).read() * .65;
+			double x = joystick.getAxis(0).read() * .45;
 			double y = -joystick.getAxis(1).read();
+			
+			x = powerWithSign(x, 2);
+			y = powerWithSign(y, 2);
 			
 			double maxSpeed = speed * timer.get();
 			
@@ -134,6 +139,15 @@ public class TalonDriveControl{
 			return false;
 		}
 		
+	}
+	
+	private double powerWithSign(double in, double ex){
+		double posRes = Math.pow(Math.abs(in), ex);
+		if (in > 0){
+			return posRes;
+		} else {
+			return -posRes;
+		}
 	}
 }
 

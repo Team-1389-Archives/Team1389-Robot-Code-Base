@@ -44,7 +44,9 @@ public class PositionControllerRampCommand extends Command{
 
 		this.controller.setPID(pidC);
 		
-		controller.setCurrentPositionAs(0);
+		if (setpointProvider.shouldResetPosition()){
+			controller.setCurrentPositionAs(0);
+		}
 		setpoint = controller.getPosition();
 		
 		setpointProvider.init();

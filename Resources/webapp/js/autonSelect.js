@@ -28,7 +28,7 @@ function drawSelected(autonName){
 	[].forEach.call(buttons, function(button){
 		button.style.backgroundColor="";
 	})
-	nameElementMap[autonName].style.backgroundColor="green";
+	nameElementMap[autonName].style.backgroundColor= "#7CFC00";
 }
 
 function makeAutonElement(modeData){

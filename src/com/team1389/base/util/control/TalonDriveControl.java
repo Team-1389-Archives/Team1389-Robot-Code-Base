@@ -118,7 +118,7 @@ public class TalonDriveControl{
 		
 		@Override
 		public boolean execute() {
-			double x = joystick.getAxis(0).read() * .45;
+			double x = joystick.getAxis(0).read() * .5;
 			double y = -joystick.getAxis(1).read();
 			
 			x = powerWithSign(x, 2);
@@ -136,9 +136,40 @@ public class TalonDriveControl{
 			right.setSetpoint(rightPos);
 
 			timer.zero();
+			
+			
+//			double speedMod = 0.65 * 1.0;
+//			double turnMod = .45;
+//			double turnAlotMod = 0.65;
+//			
+//			if(joystick.getButton(1).isTriggered()){
+//				speedMod = 1.0;
+//			}
+//			
+//			double y, normalTurn, extraTurn;
+//			double left, right;
+//			normalTurn = joystick.getAxis(2).read() * turnMod;
+//			y = joystick.getAxis(1).read();
+//			System.out.println("y: " + y);
+//			extraTurn = joystick.getAxis(0).read() * turnAlotMod;
+//			System.out.println("extra: " + extraTurn);
+//			double x = absMax(normalTurn, extraTurn);
+//			left = y - x;
+//			right = y + x;
+//			System.out.println("left: " + left + " right: " + right);
+//			driveTrain.set(left * speedMod, right * speedMod);
+
 			return false;
 		}
 		
+	}
+
+	public double absMax(double a, double b){
+		if (Math.abs(a) > Math.abs(b)){
+			return a;
+		} else {
+			return b;
+		}
 	}
 	
 	private double powerWithSign(double in, double ex){

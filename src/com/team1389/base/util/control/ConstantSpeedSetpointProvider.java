@@ -21,5 +21,9 @@ public class ConstantSpeedSetpointProvider implements SetpointProvider{
 	public double getSetpoint() {
 		return timer.get() * speed;
 	}
+	
+	public void setSpeed(double speed){
+		this.speed = speed;
+	}
 
 }

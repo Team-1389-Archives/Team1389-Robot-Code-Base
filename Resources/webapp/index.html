@@ -1,14 +1,100 @@
 <html>
 	<head>
 		<meta charset="UTF-8">
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300italic,700,700italic">
+		<link rel="stylesheet" href="milligram/dist/milligram.min.css">
+		<link rel="stylesheet" href="css/webdashboard.css">
 	</head>
+
+
 	<body>
-		<p>page loaded from roborio</p>
-		<p>or a simulation</p>
-		<br>
-		<p><a href="html/autonSelect.html">Auton Select</a></p>
-		<p><a href="html/constants.html">Constants</a></p>
-		<p><a href="html/charts.html">Charts</a></p>
-		<p><a href="/projectSpecific">Robot</a></p>
+
+		<div id = "header">
+			<h1 id = "dashboard-title" title="Web Dashboard">
+					Team 1389 Web Dashboard
+			</h1>
+		</div>
+
+		<div id = "content">
+			<div id = "container">
+				<div id="menu" title = "test">
+
+					<a class="button" href="autonSelect.html">Auton Selection</a>
+					<br>
+					<a class="button" href="constants.html">Constants</a>
+					<br>
+					<a class="button" href="systemscheck.html">Systems Check</a>
+					<br>
+					<a class="button" href="charts.html">Charts</a>
+					<br>
+					<a class="button" href="robotSpecific">Robot</a>
+
+				</div>
+
+				<div id="sensor-table">	
+					<table>
+		 				 <thead>
+		    				 <tr>
+		      			         <th>Sensor</th>
+		      			 		 <th>Port</th>
+		                 		 <th>Value</th>
+		              
+		                     </tr>
+		  				</thead>
+		  			<tbody>
+		    			<tr>
+		      				 <td>Right Drive Encoder</td>
+		      				 <td>1</td>
+		      				 <td>xx</td>
+		    			</tr>
+		    			<tr>
+		      				 <td>Left Drive Encoder</td>
+		      				 <td>2</td>
+		      				 <td>xx</td>
+		    			</tr>
+		    			<tr>
+		      				 <td>Elevation Encoder</td>
+		      				 <td>3</td>
+		      				 <td>xx</td>
+		    			</tr>
+		    			<tr>
+		      				 <td>Turntable Encoder</td>
+		      				 <td>4</td>
+		      				 <td>xx</td>
+		    			</tr>
+		    			<tr>
+		      				 <td>Flywheel Encoder</td>
+		      				 <td>5</td>
+		      				 <td>xx</td>
+		    			 </tr>
+		    			 <tr>
+		    				 <td>Camera 1</td> 	
+		    				 <td>USB-1</td>
+		    				 <td>xx</td>	
+		    			 </tr>
+		    			 <tr>
+		    				 <td>Camera 2</td>
+		    				 <td>USB-2</td>	
+		    				 <td>xx</td>	
+		    			 </tr> 	
+		  			 </tbody>
+					 </table>
+				</div>
+			</div>
+		</div>
+
+		<div id="footer">
+			<p>Created with Milligram CSS
+			   The Body Electric
+			   Team 1389
+
+
+			</p>
+
+			
+
+
+
+		</div>
 	</body>
 </html>

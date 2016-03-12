@@ -16,6 +16,8 @@ public abstract class AutonomousBase{
 	Command runningCommand;
 
 	public AutonomousBase() {
+	}
+	public void construct(){
 		modes = new HashMap<String, AutonMode>();
 		List<AutonMode> modesList = provideAutonModes();
 		modesList.add(new DoNothingAuton());

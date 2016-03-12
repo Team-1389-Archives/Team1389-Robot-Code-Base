@@ -58,7 +58,7 @@ public class PositionControllerRampCommand extends Command{
 
 	@Override
 	public boolean execute() {
-		System.out.println("executing");
+		System.out.println("executing: pos:" + controller.getPosition() + " setpoint:" + setpoint);
 		goalPoint = setpointProvider.getSetpoint();
 		
 		setpoint = getNextSetpoint(goalPoint, timer.get());

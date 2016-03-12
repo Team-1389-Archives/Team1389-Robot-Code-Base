@@ -4,6 +4,7 @@ import org.strongback.command.Command;
 import org.strongback.components.ui.InputDevice;
 
 import com.team1389.base.util.CommandsUtil;
+import com.team1389.base.util.DoubleConstant;
 import com.team1389.base.util.Timer;
 import com.team1389.base.util.control.ConfigurablePid.PIDConstants;
 import com.team1389.base.wpiWrappers.TalonSRXPositionHardware;
@@ -16,6 +17,14 @@ public class TalonDriveControl{
 	double maxVel, maxAcc, turnMod;
 	PIDConstants pid;
 	Command configTalons;
+	DoubleConstant turnModEditor;
+	DoubleConstant straightDriveFunctionEditor;
+	DoubleConstant turnDriveFunctionEditor;
+	DoubleConstant driveModEditor;
+	DoubleConstant throttleAxis;
+	DoubleConstant yawAxis;
+
+	
 	
 	public TalonDriveControl(TalonSRXPositionHardware left, TalonSRXPositionHardware right, double maxVel, double maxAcc, double wheelTurnsPerRotation, PIDConstants pid) {
 		this.left = left;
@@ -25,7 +34,11 @@ public class TalonDriveControl{
 		this.turnMod = wheelTurnsPerRotation;
 		this.pid = pid;
 		configTalons = new SetPid(left, right, pid);
-	}
+		turnModEditor = new DoubleConstant("turnMod", 0.5);
+		straightDriveFunctionEditor = new DoubleConstant("straightDriveFunction", 2.0);
+		turnDriveFunctionEditor = new DoubleConstant("turnDriveFunction",2.0);
+		driveModEditor = new DoubleConstant("driveMod",0.8);
+		}
 	
 	public Command driveDistanceCommand(double distance){
 		MotionProfile profile = new ConstantAccellerationMotionProfile(distance, maxVel, maxAcc);
@@ -118,8 +131,8 @@ public class TalonDriveControl{
 		
 		@Override
 		public boolean execute() {
-			double x = joystick.getAxis(0).read() * .5;
-			double y = -joystick.getAxis(1).read();
+			double x = joystick.getAxis(0).read() *turnModEditor.get();
+			double y = -joystick.getAxis(1).read()*driveModEditor.get();
 			
 			x = powerWithSign(x, 2);
 			y = powerWithSign(y, 2);
@@ -137,28 +150,6 @@ public class TalonDriveControl{
 
 			timer.zero();
 			
-			
-//			double speedMod = 0.65 * 1.0;
-//			double turnMod = .45;
-//			double turnAlotMod = 0.65;
-//			
-//			if(joystick.getButton(1).isTriggered()){
-//				speedMod = 1.0;
-//			}
-//			
-//			double y, normalTurn, extraTurn;
-//			double left, right;
-//			normalTurn = joystick.getAxis(2).read() * turnMod;
-//			y = joystick.getAxis(1).read();
-//			System.out.println("y: " + y);
-//			extraTurn = joystick.getAxis(0).read() * turnAlotMod;
-//			System.out.println("extra: " + extraTurn);
-//			double x = absMax(normalTurn, extraTurn);
-//			left = y - x;
-//			right = y + x;
-//			System.out.println("left: " + left + " right: " + right);
-//			driveTrain.set(left * speedMod, right * speedMod);
-
 			return false;
 		}
 		

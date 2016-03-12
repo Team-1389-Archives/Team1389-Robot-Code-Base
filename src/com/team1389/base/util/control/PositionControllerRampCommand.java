@@ -51,11 +51,14 @@ public class PositionControllerRampCommand extends Command{
 		
 		setpointProvider.init();
 
+		controller.disable();
+		
 		timer.zero();
 	}
 
 	@Override
 	public boolean execute() {
+		System.out.println("executing");
 		goalPoint = setpointProvider.getSetpoint();
 		
 		setpoint = getNextSetpoint(goalPoint, timer.get());

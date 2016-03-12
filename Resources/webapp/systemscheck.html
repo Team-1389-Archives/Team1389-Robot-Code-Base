@@ -1,0 +1,59 @@
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300italic,700,700italic">
+		<link rel="stylesheet" href="milligram/dist/milligram.min.css">
+		<link rel="stylesheet" href="css/webdashboard.css">
+	</head>	
+
+	<body>
+		<div id = "header">
+			<h1>Systems Check</h1>
+		</div>	
+
+		<div id = "checklist">
+			<form action="">
+				<input type="checkbox" name="vehicle" value="Bike">Right Drive Motor<br>
+				<input type="checkbox" name="vehicle" value="Car">Left Drive Motor <br>
+				<input type="checkbox" name="vehicle" value="Bike">Flywheel Motor<br>
+				<input type="checkbox" name="vehicle" value="Car">Intake Motor <br>
+				<input type="checkbox" name="vehicle" value="Bike">Elevation Motor<br>
+				<input type="checkbox" name="vehicle" value="Car"> Turntable Motor <br>
+				<input type="checkbox" name="vehicle" value="Car"> Ari <br>
+				<div id = "salty"> 
+					<input id="salty-ari" type="checkbox" name="vehicle" value="Car"> Salty? <br>
+					<a id = "desalt-ari" class="button">De-Salt</a>
+				</div>
+				<input type="checkbox" name="vehicle" value="Car"> Jacob <br>
+				<div id= "salty">
+				<input id="salty-jacob" type="checkbox" name="vehicle" value="Car"> Salty? <br>
+				<a id= "desalt-jacob" class="button">De-Salt</a>
+				</div>
+				<!-- MUST STAY AT BOTTOM -->
+				<a id = "clear-all" class = "button">Clear All</a>
+
+				<script type="text/javascript">
+					var desaltJacob = document.getElementById('desalt-jacob');
+					
+
+					desaltJacob.addEventListener("click", function(){
+						alert("DE-SALTING");
+						document.getElementById('salty-jacob').checked = false;
+					});
+					var desaltAri = document.getElementById('desalt-ari');
+					desaltAri.addEventListener("click", function(){
+						if(document.getElementById('salty-ari').checked == false){
+								alert("DE-SALTING");
+								document.getElementById('salty-ari').checked = true;
+						
+						}
+					});
+
+
+				</script>
+				</div>
+			</form>
+		</div>
+	</body>
+
+</html>

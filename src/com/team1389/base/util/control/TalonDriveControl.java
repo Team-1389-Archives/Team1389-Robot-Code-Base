@@ -34,10 +34,10 @@ public class TalonDriveControl{
 		this.turnMod = wheelTurnsPerRotation;
 		this.pid = pid;
 		configTalons = new SetPid(left, right, pid);
-		turnModEditor = new DoubleConstant("turnMod", 0.5);
+		turnModEditor = new DoubleConstant("turnMod", 0.55);
 		straightDriveFunctionEditor = new DoubleConstant("straightDriveFunction", 2.0);
-		turnDriveFunctionEditor = new DoubleConstant("turnDriveFunction",2.0);
-		driveModEditor = new DoubleConstant("driveMod",0.8);
+		turnDriveFunctionEditor = new DoubleConstant("turnDriveFunction",1.6);
+		driveModEditor = new DoubleConstant("driveMod",2.0);
 		}
 	
 	public Command driveDistanceCommand(double distance){
@@ -132,12 +132,12 @@ public class TalonDriveControl{
 		@Override
 		public boolean execute() {
 			double x = joystick.getAxis(0).read() *turnModEditor.get();
-			double y = -joystick.getAxis(1).read()*driveModEditor.get();
+			double y = -joystick.getAxis(1).read();
 			
 			x = powerWithSign(x, 2);
 			y = powerWithSign(y, 2);
 			
-			double maxSpeed = speed * timer.get();
+			double maxSpeed = driveModEditor.get() * timer.get();
 			
 			double changeInLeftPos = (y + x) * maxSpeed;
 			double changeInRightPos = (y - x) * maxSpeed;

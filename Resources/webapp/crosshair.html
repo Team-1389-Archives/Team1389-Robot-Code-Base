@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+#frame {
+    position: relative;
+}
+
+.image {
+    position: absolute;
+    left: 0;
+    top: 0px;
+    right: 0;
+    bottom: 0;
+
+    display: block;
+    margin: auto; 
+}
+#crosshair{
+	top:120px;
+	left:-20px;
+}
+</style>
+</head>
+<body>
+<div id="frame">
+	<img class="image" src="http://roborio-1389-frc.local:5801/?action=stream"style="vertical-align:middle;width:640px;height:480px"></img>
+	<img id="crosshair" class="image" src="crosshair.png"style="background: transparent;width:100px;height:90px;"></img>
+</div>
+</body>
+</html>

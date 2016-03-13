@@ -23,7 +23,9 @@ public class PositionControllerControlCommand extends Command{
 
 	@Override
 	public boolean execute() {
-		controller.setPosition(setpointProvider.getSetpoint());
+		double setpoint = setpointProvider.getSetpoint();
+		System.out.println("setpoint is " + setpoint);
+		controller.setPosition(setpoint);
 		return setpointProvider.isFinished();
 	}
 	

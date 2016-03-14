@@ -23,9 +23,11 @@ public class TalonSRXPositionHardware implements PositionController{
 
 	@Override
 	public void setPosition(double position) {
-		this.wpiTalon.changeControlMode(TalonControlMode.Position); double hardwarePosition = (position + offset) * ticksPerRotation;
+		this.wpiTalon.changeControlMode(TalonControlMode.Position);
+		double hardwarePosition = (position + offset) * ticksPerRotation;
 		//TODO: PLEASE FIX THIS LATER
 		if (true || wpiTalon.isSensorPresent(FeedbackDevice.PulseWidth).equals(FeedbackDeviceStatus.FeedbackStatusPresent)){
+			System.out.println("pos: " + hardwarePosition + " port: " + wpiTalon.getDeviceID());
 			wpiTalon.set(hardwarePosition);
 		} else {
 			System.out.println("encoder disconnected, current value is " + wpiTalon.getPosition());

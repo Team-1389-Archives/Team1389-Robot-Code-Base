@@ -6,6 +6,7 @@ public class ConstantSpeedSetpointProvider implements SetpointProvider{
 	
 	Timer timer;
 	double speed;
+	double pos;
 	
 	public ConstantSpeedSetpointProvider(double speed) {
 		timer = new Timer();
@@ -15,11 +16,16 @@ public class ConstantSpeedSetpointProvider implements SetpointProvider{
 	@Override
 	public void init() {
 		timer.zero();
+		pos = 0.0;
 	}
 
 	@Override
 	public double getSetpoint() {
-		return timer.get() * speed;
+		double change = timer.get() * speed;
+		pos += change;
+		System.out.println("setpoing in constantssp" + pos);
+		timer.zero();
+		return pos;
 	}
 	
 	public void setSpeed(double speed){

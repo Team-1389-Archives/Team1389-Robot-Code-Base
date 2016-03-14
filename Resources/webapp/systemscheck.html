@@ -4,54 +4,104 @@
 		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300italic,700,700italic">
 		<link rel="stylesheet" href="milligram/dist/milligram.min.css">
 		<link rel="stylesheet" href="css/webdashboard.css">
-	</head>	
+	</head>
 
 	<body>
 		<div id = "header">
 			<h1>Systems Check</h1>
-		</div>	
+		</div>
 
 		<div id = "checklist">
 			<form action="">
-				<input type="checkbox" name="vehicle" value="Bike">Right Drive Motor<br>
-				<input type="checkbox" name="vehicle" value="Car">Left Drive Motor <br>
-				<input type="checkbox" name="vehicle" value="Bike">Flywheel Motor<br>
-				<input type="checkbox" name="vehicle" value="Car">Intake Motor <br>
-				<input type="checkbox" name="vehicle" value="Bike">Elevation Motor<br>
-				<input type="checkbox" name="vehicle" value="Car"> Turntable Motor <br>
-				<input type="checkbox" name="vehicle" value="Car"> Ari <br>
-				<div id = "salty"> 
-					<input id="salty-ari" type="checkbox" name="vehicle" value="Car"> Salty? <br>
-					<a id = "desalt-ari" class="button">De-Salt</a>
-				</div>
-				<input type="checkbox" name="vehicle" value="Car"> Jacob <br>
-				<div id= "salty">
-				<input id="salty-jacob" type="checkbox" name="vehicle" value="Car"> Salty? <br>
-				<a id= "desalt-jacob" class="button">De-Salt</a>
-				</div>
+				<input id = "part-check" class="system"type="checkbox">Turret Motor<br>
+				<input id = "part-check1" class="system"type="checkbox">Intake Motor <br>
+				<input id = "part-check2" class="system"type="checkbox">Flywheel Left Motor<br>
+				<input id = "part-check3" class="system"type="checkbox">Flywheel Right Motor <br>
+				<input id = "part-check4" class="system"type="checkbox">Left Dirve Motor<br>
+				<input id = "part-check5" class="system"type="checkbox"> Right Drive Motor <br>
+			</div>
 				<!-- MUST STAY AT BOTTOM -->
+				<div>
 				<a id = "clear-all" class = "button">Clear All</a>
-
+			</div>
+				<a id = "go-back" class = "button" href = "index.html">Go Back</a>
 				<script type="text/javascript">
-					var desaltJacob = document.getElementById('desalt-jacob');
-					
-
-					desaltJacob.addEventListener("click", function(){
-						alert("DE-SALTING");
-						document.getElementById('salty-jacob').checked = false;
+					var uncheck  = document.getElementById('clear-all');
+					uncheck.addEventListener("click", function(){
+						document.getElementById('intake-green').style.visibility = "hidden";
+						document.getElementById('turret-green').style.visibility = "hidden";
+						document.getElementById('flyA-green').style.visibility = "hidden";
+						document.getElementById('flyB-green').style.visibility = "hidden";
+						document.getElementById('drive-left-green').style.visibility = "hidden";
+						document.getElementById('drive-right-green').style.visibility = "hidden";
+						document.getElementById('part-check').checked = false;
+						document.getElementById('part-check1').checked = false;
+						document.getElementById('part-check2').checked = false;
+						document.getElementById('part-check3').checked = false;
+						document.getElementById('part-check4').checked = false;
+						document.getElementById('part-check5').checked = false;
 					});
-					var desaltAri = document.getElementById('desalt-ari');
-					desaltAri.addEventListener("click", function(){
-						if(document.getElementById('salty-ari').checked == false){
-								alert("DE-SALTING");
-								document.getElementById('salty-ari').checked = true;
-						
+					document.getElementById('part-check1').addEventListener('change', function(){
+						if(document.getElementById('part-check1').checked){
+							document.getElementById('intake-green').style.visibility = "visible";
+						}else{
+						document.getElementById('intake-green').style.visibility = "hidden";
 						}
 					});
-
-
+					document.getElementById('part-check').addEventListener('change', function(){
+						if(document.getElementById('part-check').checked){
+							document.getElementById('turret-green').style.visibility = "visible";
+						}else{
+						document.getElementById('turret-green').style.visibility = "hidden";
+						}
+					});
+					document.getElementById('part-check2').addEventListener('change', function(){
+						if(document.getElementById('part-check2').checked){
+							document.getElementById('flyA-green').style.visibility = "visible";
+						}else{
+						document.getElementById('flyA-green').style.visibility = "hidden";
+						}
+					});
+					document.getElementById('part-check3').addEventListener('change', function(){
+						if(document.getElementById('part-check3').checked){
+							document.getElementById('flyB-green').style.visibility = "visible";
+						}else{
+						document.getElementById('flyB-green').style.visibility = "hidden";
+						}
+					});
+					document.getElementById('part-check4').addEventListener('change', function(){
+						if(document.getElementById('part-check4').checked){
+							document.getElementById('drive-left-green').style.visibility = "visible";
+						}else{
+						document.getElementById('drive-left-green').style.visibility = "hidden";
+						}
+					});
+					document.getElementById('part-check5').addEventListener('change', function(){
+						if(document.getElementById('part-check5').checked){
+							document.getElementById('drive-right-green').style.visibility = "visible";
+						}else{
+						document.getElementById('drive-right-green').style.visibility = "hidden";
+						}					});
+					document.getElementsByClassName('')
 				</script>
 				</div>
+					<div id = "visual-checklist" style="position: relative; left: 0; top: 0;">
+						<img id = "grid" src="Robot Systems Check/grid.png"/>
+						<img id = "base" src="Robot Systems Check/base schematic.png"/>
+						<img class="red" id = "intake-red" src="Robot Systems Check/intakeRed.png"/>
+						<img class="red" id = "turret-red" src="Robot Systems Check/turret red.png"/>
+						<img class="red" id = "flyA-red" src="Robot Systems Check/Flywheel Motor A red.png"/>
+						<img class="red" id = "flyB-red" src="Robot Systems Check/Flywheel Motor B red.png"/>
+						<img class="red" id = "drive-left-red" src="Robot Systems Check/Drive Left red.png"/>
+						<img class="red" id = "drive-right-red" src="Robot Systems Check/Drive right red.png"/>
+						<img class="green" id = "intake-green" src="Robot Systems Check/intake green.png"/>
+						<img class="green" id = "turret-green" src="Robot Systems Check/turret green.png"/>
+						<img class="green" id = "flyA-green" src="Robot Systems Check/Flywheel Motor A green.png"/>
+						<img class="green" id = "flyB-green" src="Robot Systems Check/Flywheel Motor B green.png"/>
+						<img class="green" id = "drive-left-green" src="Robot Systems Check/Drive Left green.png"/>
+						<img class="green" id = "drive-right-green" src="Robot Systems Check/Drive right green.png"/>
+
+					</div>
 			</form>
 		</div>
 	</body>

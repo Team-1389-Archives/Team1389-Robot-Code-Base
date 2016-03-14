@@ -3,7 +3,99 @@
 .milligram{
 	color: #9b4dca;
 }
+#visual-checklist>img{
+	align:center;
+}
+#base{
+	background: transparent;
+	position: absolute;
+	top: 0px;
+	left: 0px;
+}
+#intake-red{
+	background: transparent;
+	position: absolute;
+	top: 0px;
+	left: 0px;
+}
+#turret-red{
+	background: transparent;
+	position: absolute;
+	top: 0px;
+	left: 0px;
+}
+#flyA-red{
+	background: transparent;
+	position: absolute;
+	top: 0px;
+	left: 0px;
+}
+#flyB-red{
+	background: transparent;
+	position: absolute;
+	top: 0px;
+	left: 0px;
+}
+#drive-left-red{
+	background: transparent;
+	position: absolute;
+	top: 0px;
+	left: 0px;
+}
+#drive-right-red{
+	background: transparent;
+	position: absolute;
+	top: 0px;
+	left: 0px;
+}
+#intake-green{
+	background: transparent;
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	visibility: hidden;
+}
+#turret-green{
+	background: transparent;
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	visibility: hidden;
+}
+#flyA-green{
+	background: transparent;
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	visibility: hidden;
+}
+#flyB-green{
+	background: transparent;
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	visibility: hidden;
+}
+#drive-left-green{
+	background: transparent;
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	visibility: hidden;
+}
+#drive-right-green{
+	background: transparent;
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	visibility: hidden;
+}
+#visual-checklist{
 
+}
+#background{
+	width:300px;
+}
 #header{
 	padding-top: 30px;
 	text-align: center;
@@ -20,12 +112,13 @@
 }
 
 #container{
-	float: center;
+align: auto;
+text-align: left;
 }
 
 #menu .button{
 	font-size: 20px;
-	background-color:#0066CC; 
+	background-color:#0066CC;
 	border-color:#0066CC;
 	text-align: center;
 	width: 300px;
@@ -39,7 +132,7 @@
 	padding-top: 30px;
 	padding-left: 40px;
 	padding-right: 30px;
-	
+
 }
 
 #checklist {
@@ -55,10 +148,3 @@
 #salty {
 	padding-left: 25px
 }
-
-
-
-
-
-
-

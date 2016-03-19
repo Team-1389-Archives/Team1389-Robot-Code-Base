@@ -23,7 +23,6 @@ public class ConstantSpeedSetpointProvider implements SetpointProvider{
 	public double getSetpoint() {
 		double change = timer.get() * speed;
 		pos += change;
-		System.out.println("setpoing in constantssp" + pos);
 		timer.zero();
 		return pos;
 	}

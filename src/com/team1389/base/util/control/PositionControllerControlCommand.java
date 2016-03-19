@@ -17,7 +17,7 @@ public class PositionControllerControlCommand extends Command{
 	}
 	
 	public PositionControllerControlCommand(SetpointProvider setpointProvider, PositionController controller) {
-		pid = null;
+		this(setpointProvider, controller, null);
 	}
 	
 	@Override
@@ -34,7 +34,6 @@ public class PositionControllerControlCommand extends Command{
 	@Override
 	public boolean execute() {
 		double setpoint = setpointProvider.getSetpoint();
-		System.out.println("setpoint is " + setpoint);
 		controller.setPosition(setpoint);
 		return setpointProvider.isFinished();
 	}

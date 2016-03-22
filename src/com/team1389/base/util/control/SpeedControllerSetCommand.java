@@ -23,5 +23,9 @@ public class SpeedControllerSetCommand extends Command{
 	public boolean execute() {
 		return true;
 	}
+	
+	public void setSpeed(double speed){
+		this.speed = speed;
+	}
 
 }

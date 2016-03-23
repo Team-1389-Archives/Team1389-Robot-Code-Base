@@ -15,30 +15,24 @@ import edu.wpi.first.wpilibj.TalonSRX;
 public class TalonDriveControl{
 	TalonSRXPositionHardware left, right;
 	double maxVel, maxAcc, turnMod;
-	PIDConstants pid;
-	Command configTalons;
-	DoubleConstant turnModEditor;
-	DoubleConstant straightDriveFunctionEditor;
-	DoubleConstant turnDriveFunctionEditor;
-	DoubleConstant driveModEditor;
-	DoubleConstant throttleAxis;
-	DoubleConstant yawAxis;
-
+	PIDConstants forwardPid;
+	PIDConstants turnPid;
+	Command configTalonsForward;
+	Command configTalonsTurn;
 	
 	
-	public TalonDriveControl(TalonSRXPositionHardware left, TalonSRXPositionHardware right, double maxVel, double maxAcc, double wheelTurnsPerRotation, PIDConstants pid) {
+	public TalonDriveControl(TalonSRXPositionHardware left, TalonSRXPositionHardware right, double maxVel, double maxAcc, double wheelTurnsPerRotation,
+			PIDConstants forwardPid, PIDConstants turnPid) {
 		this.left = left;
 		this.right = right;
 		this.maxVel = maxVel;
 		this.maxAcc = maxAcc;
 		this.turnMod = wheelTurnsPerRotation;
-		this.pid = pid;
-		configTalons = new SetPid(left, right, pid);
-		turnModEditor = new DoubleConstant("turnMod", 0.55);
-		straightDriveFunctionEditor = new DoubleConstant("straightDriveFunction", 2.0);
-		turnDriveFunctionEditor = new DoubleConstant("turnDriveFunction",1.6);
-		driveModEditor = new DoubleConstant("driveMod",2.0);
-		}
+		this.forwardPid = forwardPid;
+		this.turnPid = turnPid;
+		configTalonsForward = new SetPid(left, right, forwardPid);
+		configTalonsTurn = new SetPid(left, right, forwardPid);
+	}
 	
 	public Command driveDistanceCommand(double distance){
 		MotionProfile profile = new ConstantAccellerationMotionProfile(distance, maxVel, maxAcc);
@@ -49,11 +43,11 @@ public class TalonDriveControl{
 		Command rightCommand = new PositionControllerControlCommand(provider, right);
 		
 		Command all = CommandsUtil.combineSimultaneous(leftCommand, rightCommand);
-		return CommandsUtil.combineSequential(configTalons, all);
+		return CommandsUtil.combineSequential(configTalonsForward, all);
 	}
 	
 	public Command turnAmount(double rotations){
-		MotionProfile leftProfile = new ConstantAccellerationMotionProfile(rotations * turnMod, maxVel, maxAcc);
+		MotionProfile leftProfile = new ConstantAccellerationMotionProfile(rotations * turnMod, maxVel * 2.5, maxAcc * 10);
 		MotionProfile rightProfile = new InvertMotionProfile(leftProfile);
 
 		SetpointProvider leftProvider = new MotionProfileSetpointProvider(leftProfile);
@@ -63,7 +57,7 @@ public class TalonDriveControl{
 		Command rightCommand = new PositionControllerControlCommand(rightProvider, right);
 		
 		Command all = CommandsUtil.combineSimultaneous(leftCommand, rightCommand);
-		return CommandsUtil.combineSequential(configTalons, all);
+		return CommandsUtil.combineSequential(configTalonsTurn, all);
 	}
 	
 	public Command teleopControl(InputDevice joystick, double maxSpeed){
@@ -75,7 +69,7 @@ public class TalonDriveControl{
 		Command driveControl = new DriveControl(leftProvider, rightProvider, joystick, maxSpeed);
 		
 		Command all = CommandsUtil.combineSimultaneous(driveControl, leftCommand, rightCommand);
-		return CommandsUtil.combineSequential(configTalons, all);
+		return CommandsUtil.combineSequential(configTalonsForward, all);
 	}
 	
 	class SetPid extends Command{
@@ -131,13 +125,13 @@ public class TalonDriveControl{
 		
 		@Override
 		public boolean execute() {
-			double x = joystick.getAxis(0).read() *turnModEditor.get();
+			double x = joystick.getAxis(0).read() * .55;
 			double y = -joystick.getAxis(1).read();
 			
 			x = powerWithSign(x, 2);
 			y = powerWithSign(y, 2);
 			
-			double maxSpeed = driveModEditor.get() * timer.get();
+			double maxSpeed = 2.0 * timer.get();
 			
 			double changeInLeftPos = (y + x) * maxSpeed;
 			double changeInRightPos = (y - x) * maxSpeed;

@@ -37,4 +37,8 @@ public class TalonSRXSpeedHardware{
 		wpiTalon.set(0);
 	}
 	
+	public double getSpeed(){
+		return wpiTalon.getSpeed();
+	}
+	
 }

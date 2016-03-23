@@ -16,16 +16,20 @@ public class SpeedControllerSetCommand extends Command{
 	
 	@Override
 	public void initialize() {
-		controller.setSpeed(speed);
 	}
 
 	@Override
 	public boolean execute() {
-		return true;
+		controller.setSpeed(speed);
+		return false;
 	}
 	
 	public void setSpeed(double speed){
 		this.speed = speed;
+	}
+	
+	public TalonSRXSpeedHardware getController(){
+		return controller;
 	}
 
 }

@@ -98,5 +98,11 @@ public class PositionControllerRampCommand extends Command{
 	public void interrupted() {
 		end();
 	}
+	
+	public void setPID(PIDConstants newPid){
+		System.out.println("yes i am setting pid");
+		this.pidC = newPid;
+		this.controller.setPID(pidC);
+	}
 
 }

@@ -28,10 +28,14 @@ public class TalonDriveControl{
 		this.maxVel = maxVel;
 		this.maxAcc = maxAcc;
 		this.turnMod = wheelTurnsPerRotation;
-		this.forwardPid = forwardPid;
+		setPids(forwardPid, turnPid);
+	}
+	
+	public void setPids(PIDConstants straightPid, PIDConstants turnPid){
+		this.forwardPid = straightPid;
 		this.turnPid = turnPid;
 		configTalonsForward = new SetPid(left, right, forwardPid);
-		configTalonsTurn = new SetPid(left, right, forwardPid);
+		configTalonsTurn = new SetPid(left, right, turnPid);
 	}
 	
 	public Command driveDistanceCommand(double distance){
@@ -47,7 +51,7 @@ public class TalonDriveControl{
 	}
 	
 	public Command turnAmount(double rotations){
-		MotionProfile leftProfile = new ConstantAccellerationMotionProfile(rotations * turnMod, maxVel * 2.5, maxAcc * 10);
+		MotionProfile leftProfile = new ConstantAccellerationMotionProfile(rotations * turnMod, maxVel, maxAcc * 3);
 		MotionProfile rightProfile = new InvertMotionProfile(leftProfile);
 
 		SetpointProvider leftProvider = new MotionProfileSetpointProvider(leftProfile);

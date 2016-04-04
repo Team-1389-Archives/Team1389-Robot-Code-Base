@@ -50,8 +50,13 @@ public class TalonDriveControl{
 		return CommandsUtil.combineSequential(configTalonsForward, all);
 	}
 	
+	public double timeForDistance (double distance){
+		MotionProfile profile = new ConstantAccellerationMotionProfile(distance, maxVel, maxAcc);
+		return profile.getDuration();
+	}
+	
 	public Command turnAmount(double rotations){
-		MotionProfile leftProfile = new ConstantAccellerationMotionProfile(rotations * turnMod, maxVel, maxAcc * 3);
+		MotionProfile leftProfile = new ConstantAccellerationMotionProfile(rotations * turnMod, maxVel, maxAcc * 2);
 		MotionProfile rightProfile = new InvertMotionProfile(leftProfile);
 
 		SetpointProvider leftProvider = new MotionProfileSetpointProvider(leftProfile);

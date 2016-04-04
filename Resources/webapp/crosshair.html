@@ -24,8 +24,22 @@
 </head>
 <body>
 <div id="frame">
-	<img class="image" src="http://roborio-1389-frc.local:5801/?action=stream"style="vertical-align:middle;width:640px;height:480px"></img>
+	<img class="image" id="feed" src="http://roborio-1389-frc.local:5801/?action=stream"style="vertical-align:middle;width:640px;height:480px"></img>
 	<img id="crosshair" class="image" src="crosshair2.png"style="background: transparent;width:83px;height:126px;"></img>
 </div>
+<script type="text/javascript">
+var src1 = "http://roborio-1389-frc.local:5801/?action=stream";
+var src2 = "http://roborio-1389-frc.local:5802/?action=stream";
+var which = true;
+var img = document.getElementById("feed");
+addEventListener("keypress", function(){
+	if (which){
+		img.src = src2;
+	} else {
+		img.src = src1;
+	}
+	which = !which;
+});
+</script>
 </body>
 </html>

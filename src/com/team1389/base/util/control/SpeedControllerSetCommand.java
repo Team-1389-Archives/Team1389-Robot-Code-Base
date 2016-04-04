@@ -21,6 +21,7 @@ public class SpeedControllerSetCommand extends Command{
 	@Override
 	public boolean execute() {
 		controller.setSpeed(speed);
+		System.out.println("speed: " + speed);
 		return false;
 	}
 	

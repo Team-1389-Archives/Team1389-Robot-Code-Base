@@ -43,6 +43,7 @@ public class SequentialCommand extends Command{
 			return true;
 		} else {
 			current = commands.pop();
+			System.out.println("about to initialize command " + current);
 			current.initialize();
 			return false;
 		}

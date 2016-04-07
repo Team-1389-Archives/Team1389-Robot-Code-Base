@@ -44,7 +44,11 @@ public abstract class AutonomousBase{
 		runningAutonMode = modes.get(selectedAutonName);
 		runningCommand = runningAutonMode.getCommand();
 		Strongback.restart();
-		Strongback.submit(runningCommand);
+		if (runningCommand != null){
+			Strongback.submit(runningCommand);
+		} else {
+			System.out.println("warning: in AutonomousBase.java runningCommand is null");
+		}
 	}
 	public void autonEnd(){
 		if (runningAutonMode.shouldCancelCommandsOnAutonEnd()){

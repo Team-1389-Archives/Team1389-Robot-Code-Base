@@ -32,5 +32,9 @@ public class SpeedControllerSetCommand extends Command{
 	public TalonSRXSpeedHardware getController(){
 		return controller;
 	}
+	
+	public void hackVoltageSet(double voltage){
+		controller.hackVoltageSet(voltage);
+	}
 
 }

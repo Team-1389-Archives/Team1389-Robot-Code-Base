@@ -39,7 +39,13 @@ public class TalonDriveControl{
 	}
 	
 	public Command driveDistanceCommand(double distance){
-		MotionProfile profile = new ConstantAccellerationMotionProfile(distance, maxVel, maxAcc);
+		return driveDistanceCommand(distance, 1.0, 1.0);
+	}
+	
+	public Command driveDistanceCommand(double distance, double maxVelMultiplyer, double maxAccMultiplyer){
+		double finalMaxAcc = maxAcc * maxAccMultiplyer;
+		double finalMaxVel = maxVel * maxVelMultiplyer;
+		MotionProfile profile = new ConstantAccellerationMotionProfile(distance, finalMaxVel, finalMaxAcc);
 
 		SetpointProvider provider = new MotionProfileSetpointProvider(profile);
 
@@ -50,7 +56,54 @@ public class TalonDriveControl{
 		return CommandsUtil.combineSequential(configTalonsForward, all);
 	}
 	
+	public Command driveArcCommand(double leftDistance, double rightDistance){
+		return driveArcCommand(leftDistance, rightDistance, 1.0, 1.0);
+	}
+
+	public Command driveArcCommand(double leftDistance, double rightDistance, double maxVelMultiplyer, double maxAccMultiplyer){
+		double smallDist, largeDist;
+		boolean leftOrRight = leftDistance > rightDistance;
+		if (leftOrRight) {
+			smallDist = rightDistance;
+			largeDist = leftDistance;
+		} else {
+			smallDist = leftDistance;
+			largeDist = rightDistance;
+		}
+
+		double finalMaxAcc = maxAcc * maxAccMultiplyer;
+		double finalMaxVel = maxVel * maxVelMultiplyer;
+		
+		double mod = smallDist / largeDist;
+		MotionProfile largeProfile = new ConstantAccellerationMotionProfile(largeDist, finalMaxVel, finalMaxAcc);
+		MotionProfile smallProfile = new ScalingMotionProfile(largeProfile, mod);
+
+		SetpointProvider largeProvider = new MotionProfileSetpointProvider(largeProfile);
+		SetpointProvider smallProvider = new MotionProfileSetpointProvider(smallProfile);
+
+		
+		TalonSRXPositionHardware smallTalon, largeTalon;
+
+		if (leftOrRight){
+			smallTalon = right;
+			largeTalon = left;
+		} else {
+			smallTalon = left;
+			largeTalon = right;
+		}
+
+		Command smallCommand = new PositionControllerControlCommand(smallProvider, smallTalon);
+		Command largeCommand = new PositionControllerControlCommand(largeProvider, largeTalon);
+		
+		Command all = CommandsUtil.combineSimultaneous(smallCommand, largeCommand);
+		return CommandsUtil.combineSequential(configTalonsForward, all);
+	}
+	
 	public double timeForDistance (double distance){
+		MotionProfile profile = new ConstantAccellerationMotionProfile(distance, maxVel, maxAcc);
+		return profile.getDuration();
+	}
+	public double timeForDistance (double distance, double maxVel,double maxAcc){
 		MotionProfile profile = new ConstantAccellerationMotionProfile(distance, maxVel, maxAcc);
 		return profile.getDuration();
 	}

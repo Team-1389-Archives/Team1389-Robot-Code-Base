@@ -19,7 +19,7 @@ public class TalonSRXSpeedHardware{
 		if (wpiTalon.isSensorPresent(FeedbackDevice.PulseWidth).equals(FeedbackDeviceStatus.FeedbackStatusPresent)){
 			wpiTalon.set(speed);
 		} else {
-			System.out.println("speed encoder disconnected, current value is " + wpiTalon.getPosition());
+			System.out.println("speed encoder disconnected, current value is " + wpiTalon.getPosition() + " on talon # " + wpiTalon.getDeviceID());
 			disable();
 		}
 	}
@@ -41,4 +41,8 @@ public class TalonSRXSpeedHardware{
 		return wpiTalon.getSpeed();
 	}
 	
+	public void hackVoltageSet(double voltage){
+		wpiTalon.changeControlMode(TalonControlMode.PercentVbus);
+		wpiTalon.set(voltage);
+	}
 }

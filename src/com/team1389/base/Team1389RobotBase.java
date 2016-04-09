@@ -40,6 +40,7 @@ public abstract class Team1389RobotBase extends IterativeRobot {
     @Override
     public void autonomousInit() {
     	mode = Mode.AUTON;
+    	System.out.println("In Team1389RobotBase calling autonstart");
     	robotCode.getAutonomousBase().autonStart();
     }
     private void disabledAuton() {

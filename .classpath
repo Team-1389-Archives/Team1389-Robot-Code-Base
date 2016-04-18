@@ -15,5 +15,6 @@
 	<classpathentry kind="lib" path="lib/gson-2.3.1.jar"/>
 	<classpathentry kind="lib" path="lib/strongback.jar" sourcepath="lib/strongback-sources.jar"/>
 	<classpathentry kind="lib" path="lib/strongback-testing.jar" sourcepath="lib/strongback-testing-sources.jar"/>
+	<classpathentry kind="lib" path="lib/navx_frc.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

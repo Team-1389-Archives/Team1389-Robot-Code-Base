@@ -28,8 +28,8 @@ public abstract class PeriodicCommand extends Command{
 		return false;
 	}
 	
-	abstract double secondsBetweenTicks();
+	public abstract double secondsBetweenTicks();
 	
-	abstract void tick();
+	public abstract void tick();
 
 }

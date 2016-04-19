@@ -11,12 +11,12 @@ public class MonitorNavXCommand extends PeriodicCommand{
 	}
 
 	@Override
-	double secondsBetweenTicks() {
+	public double secondsBetweenTicks() {
 		return 1;
 	}
 
 	@Override
-	void tick() {
+	public void tick() {
 		System.out.println("Angle: " + imu.getAngle());
 	}
 

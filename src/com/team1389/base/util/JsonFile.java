@@ -27,7 +27,7 @@ public class JsonFile<T> {
 	 */
 	private String name;
 	private Class<T> tDotClass;
-	private static Gson interface_ = new GsonBuilder().create();
+	private static Gson interface_ = new GsonBuilder().serializeNulls().create();
 	// The underscore at the end of identifier distinguishes the identifier from the keyword "interface"
 	
 	/**
@@ -62,7 +62,6 @@ public class JsonFile<T> {
 	 * @param arg0 the instance of T that'll be saved
 	 * @return <tt>arg0</tt>
 	 */
-	// TODO Check if toJson() throws a NullPointerException when arg0 == null
 	public T save(T arg0){ // :)
 		try(Writer writer = new FileWriter(file)){
 			interface_.toJson(arg0, writer); // This is the line that matters
@@ -76,7 +75,6 @@ public class JsonFile<T> {
 	 * Loads and returns an instance of T from the JSON file which {@link #file} points to.
 	 * @return an instance of T from the JSON file which {@link #file} points to, or <tt>null</tt> if something goes wrong
 	 */
-	// TODO Find out what could possibly go wrong when we use tDotClass.newInstance()... maybe?
 	public T load(){
 		T loaded = null;
 		try(Reader reader = new FileReader(file)){

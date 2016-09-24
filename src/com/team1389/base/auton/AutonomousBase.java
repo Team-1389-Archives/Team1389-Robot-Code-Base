@@ -8,6 +8,9 @@ import java.util.Map;
 import org.strongback.Strongback;
 import org.strongback.command.Command;
 
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 public abstract class AutonomousBase{
 	Map<String, AutonMode> modes;
 
@@ -41,7 +44,15 @@ public abstract class AutonomousBase{
 	public void autonStart(){
 		setup();
 		
-		runningAutonMode = modes.get(selectedAutonName);
+		//Checks to see if the user has made a choice of auton mode
+		SendableChooser autonChoice = (SendableChooser) SmartDashboard.getData("Auton Mode Choice");
+		if(autonChoice.getSelected() != null){
+			runningAutonMode = (AutonMode) autonChoice.getSelected();
+		}
+		else{
+			runningAutonMode = modes.get(selectedAutonName);
+		}
+		
 		runningCommand = runningAutonMode.getCommand();
 		Strongback.restart();
 		Strongback.submit(runningCommand);

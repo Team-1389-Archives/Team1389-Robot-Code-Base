@@ -17,8 +17,10 @@ public abstract class AutonomousBase{
 	String selectedAutonName;
 	AutonMode runningAutonMode;
 	Command runningCommand;
+	protected SendableChooser autonModeChooser = new SendableChooser();
 
 	public AutonomousBase() {
+		SmartDashboard.putData("Auton Mode Choice", autonModeChooser);
 	}
 	public void construct(){
 		modes = new HashMap<String, AutonMode>();
@@ -45,13 +47,10 @@ public abstract class AutonomousBase{
 		setup();
 		
 		//Checks to see if the user has made a choice of auton mode
-		SendableChooser autonChoice = (SendableChooser) SmartDashboard.getData("Auton Mode Choice");
-		if(autonChoice.getSelected() != null){
-			runningAutonMode = (AutonMode) autonChoice.getSelected();
-		}
-		else{
-			runningAutonMode = modes.get(selectedAutonName);
-		}
+		runningAutonMode = (AutonMode) autonModeChooser.getSelected();
+		
+		//runningAutonMode = modes.get(selectedAutonName);
+		
 		
 		runningCommand = runningAutonMode.getCommand();
 		Strongback.restart();
